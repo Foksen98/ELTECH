@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang = "ru">
+    <!-- Head -->
+    <head>
+        <meta charset = "UTF-8">
+        <title> Тетрис </title>
+        <link rel = "stylesheet" href = "../css/style.css">
+    </head>
+    <!-- Body -->
+    <body>
+        <div class = "container">
+            <!-- Заголовок -->
+            <h1 class = "header_text">
+                Игра&nbsp
+                <span style = "color: red"> T </span>
+                <span style = "color: orange"> E </span>
+                <span style = "color: yellow"> T </span>
+                <span style = "color: green"> R </span>
+                <span style = "color: blue"> I </span>
+                <span style = "color: violet"> S </span>
+            </h1>
+            <!-- Левая колонка -->
+            <div class = "left_column">
+                <!-- Таблица результатов -->
+                <h2 class = "header_text"> Рекорды </h2>
+                <table id = "table">
+                    <thead>
+                        <tr>
+                            <th> Очки </th>
+                            <th> Игрок </th>
+                        </tr>
+                    </thead>
+                    <tbody id = "table_body"> </tbody>
+                </table>
+                <!-- Подпись -->
+                <div class = "author"> by <b> Konstantin Fokin </b> [foksen98@mail.ru] </div>
+            </div>
+            <!-- Правая колонка -->
+            <div class = "right_column">
+                <!-- Блок с логином -->
+                <div id = "login">
+                    <form id = "login_form" action = "main.html">
+                        <label>
+                            <h3 class = "header_text"> Введите имя: </h3>
+                            <br />
+                            <input id = "login_username" type = "text" placeholder = "Имя пользователя" required>
+                        </label>
+                        <br />
+                        <input class = "btn" type = "submit" value = "Играть!">
+                    </form>
+                    <br />
+                    <div class = "rules_block">
+                        <h1 class = "text_centered"> Правила игры: </h1>
+                        <div class "row">
+                            <div class = "left_half_column">
+                                <h3 class = "text_centered"> Клавиши для управления: </h3>
+                                <ul>
+                                    <li> <em> <b> Стрелка влево </b> </em> - перемещение фигуры влево </li>
+                                    <li> <em> <b> Стрелка вправо </b> </em> - перемещение фигуры вправо </li>
+                                    <li> <em> <b> Стрелка вниз </b> </em> - перемещение фигуры вниз </li>
+                                    <li> <em> <b> Стрелка вверх </b> </em> - повернуть фигуру </li>
+                                    <li> <em> <b> Пробел </b> </em> - "уронить" фигуру </li>
+                                </ul>
+                            </div>
+                            <div class = "right_half_column">
+                                <h3 class = "text_centered"> Начисление очков: </h3>
+                                <ul>
+                                    <li> <em> <b> 1 линия </b> </em> - 100 очков </li>
+                                    <li> <em> <b> 2 линии </b> </em> - 300 очков </li>
+                                    <li> <em> <b> 3 линии </b> </em> - 500 очков </li>
+                                    <li> <em> <b> 4 линии </b> </em> - 700 очков </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Блок с игрой -->
+                <div id = "game">
+                    <div class = "row">
+                        <div id = "board_block">
+                            <canvas id = "board" width = "300" height = "600"> </canvas>
+                        </div>
+                        <div id = "info_block">
+                            <h3> Игрок: <span id = "username"> </span> </h3>
+                            <h3> Количество очков: <span id = "score"> </span> </h3>
+                            <h3> Уровень: <span id = "level"> </span> </h3>
+                            <div>
+                                <h3> Следующая фигура: </h3>
+                                <canvas id = "next_figure" width = "180" height = "180"> </canvas>
+                            </div>
+                            <h3> Клавиши для управления: </h3>
+                            <ul>
+                                <li> <em> <b> Стрелка влево </b> </em> - перемещение фигуры влево </li>
+                                <li> <em> <b> Стрелка вправо </b> </em> - перемещение фигуры вправо </li>
+                                <li> <em> <b> Стрелка вниз </b> </em> - перемещение фигуры вниз </li>
+                                <li> <em> <b> Стрелка вверх </b> </em> - повернуть фигуру </li>
+                                <li> <em> <b> Пробел </b> </em> - "уронить" фигуру </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Блок с результатом игры -->
+                <div id = "game_over">
+                    <h1 class = "text_centered"> Игра окончена! </h1>
+                    <h2 class = "text_centered"> Вы набрали <b> <span id = "current_result"> </span> </b> очков </h2>
+                    <br />
+                    <div id = "new_game" class = btn> Новая игра </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Скрипты -->
+        <script src = "../js/figures.js"> </script>
+        <script src = "../js/game.js"> </script>
+        <script src = "../js/main.js"> </script>
+    </body>
+</html>
