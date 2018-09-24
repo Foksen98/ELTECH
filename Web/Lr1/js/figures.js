@@ -334,7 +334,7 @@ figure.prototype.lock = function() {
         }
         if (is_full_row) {
             // Если строка заполнена, нужно сдвинуть вниз все строки выше
-            for (y = i; y > 1; --y) {
+            for (y = i; y > 0; --y) {
                 for (j = 0; j < BOARD_COL; ++j) {
                     board[y][j] = board[y - 1][j];
                 }
@@ -349,12 +349,12 @@ figure.prototype.lock = function() {
     }
     if (full_row_count > 0) {
         // Увеличиваем количество очков
-        score += 100 * (2 * full_row_count - 1) ;
+        score += 100 * (2 * full_row_count - 1) * level ;
         if (score >= (level + 1) * 500) {
             // Увеличиваем уровень
             ++level;
             // Уменьшаем интервал передвижения фигур
-            interval -= 50;
+            interval *= 0.9;
         }
         achivement_audio.play();
     }

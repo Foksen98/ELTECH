@@ -12,7 +12,7 @@ table {
     margin-bottom: 5%;
     text-align: center;
     width: 80%;
-    height: 500px;
+    max-height: 500px;
     overflow-y: scroll;
 }
 
@@ -22,6 +22,10 @@ table td, table th {
     border-radius: 5px;
     box-shadow: 0 0 1px rgba(0,0,0,0.5);
     font-weight: bold;
+}
+
+tbody tr {
+    height: 40px;
 }
 
 table td {
