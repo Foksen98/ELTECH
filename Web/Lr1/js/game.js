@@ -20,6 +20,8 @@ const EMPTY = "white";
 
 // Флаг конца игры
 var game_over = true;
+// Флаг паузы
+var game_paused = false;
 // Очки
 var score = 0;
 // Уровень
@@ -115,6 +117,10 @@ document.addEventListener("keydown", function (event) {
 
 // Опускаем фигуры через определенные интервалы (начальный интервал - 600мс)
 function drop_figure() {
+    if (game_paused) {
+        return;
+    }
+    
     let now = Date.now();
     let delta = now - drop_start;
     if (delta > interval) {

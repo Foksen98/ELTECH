@@ -350,7 +350,7 @@ figure.prototype.lock = function() {
     if (full_row_count > 0) {
         // Увеличиваем количество очков
         score += 100 * (2 * full_row_count - 1) * level ;
-        if (score >= (level + 1) * 500) {
+        if (score >= (level + 1) * 500 * level) {
             // Увеличиваем уровень
             ++level;
             // Уменьшаем интервал передвижения фигур

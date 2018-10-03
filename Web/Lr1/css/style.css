@@ -110,6 +110,11 @@ input {
     text-align: center;
 }
 
+#pause {
+    margin-top: 20%;
+    text-align: center;
+}
+
 #game_over {
     margin-top: 10%;
     text-align: center;
