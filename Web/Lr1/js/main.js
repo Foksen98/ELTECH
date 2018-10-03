@@ -13,12 +13,30 @@ document.getElementById('login_form').addEventListener('submit', function(event)
     hide_element(document.getElementById("login"));
     show_element(document.getElementById("game"));
     game_over = false;
+    game_paused = false;
     document.getElementById("score").innerText = score;
     document.getElementById("level").innerText = level;
     document.getElementById("username").innerText = read_username();
     main_audio.loop = true;
     main_audio.play();
     drop_figure();
+});
+
+// Пауза
+document.getElementById('pause').addEventListener('click', function(event) {
+    event.preventDefault();
+    if (!game_paused) {
+        game_paused = true;
+        hide_element(document.getElementById("board_block"));
+        this.innerText = "Продолжить";
+    }
+    else {
+        game_paused = false;
+        show_element(document.getElementById("board_block"));
+        this.innerText = "Пауза";
+        drop_figure();
+    }
+
 });
 
 // Новая игра
