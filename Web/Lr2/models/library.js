@@ -58,15 +58,16 @@ class Library {
     }
 
     // обновить данные книги
-    update_book(id, property, value) {
+    update_book(id, title, author, publication_date, image_url) {
         let book = this.get_book(id);
         if (book != undefined) {
-            if (property in book) {
-                book[property] = value;
-                this.books[id] = book;
-                this.save();
-                return true;
-            }
+            book['title'] = title;
+            book['author'] = author;
+            book['publication_date'] = publication_date;
+            book['image_url'] = image_url;
+            this.books[id] = book;
+            this.save();
+            return true;
         }
         return false;
     }

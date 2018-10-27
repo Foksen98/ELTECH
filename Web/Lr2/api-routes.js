@@ -25,8 +25,10 @@ router.get('/books/:id/', (req, res, next) => {
 });
 
 router.put('/books/:id/', (req, res, next) => {
-    for (property in req.body) {
-        home_lib.update_book(req.params.id, property, req.body[property]);
+    if (req.body.image_url != "") {
+        home_lib.update_book(req.body.id, req.body.title, req.body.author, req.body.publication_date, req.body.image_url);
+    } else {
+        home_lib.update_book(req.body.id, req.body.title, req.body.author, req.body.publication_date, '/public/images/image-square.png');
     }
     res.sendStatus(200);
     next();
