@@ -77,8 +77,8 @@ class Library {
         let book = this.get_book(id);
         if (book != undefined) {
             if (book.reader == null) {
-                this.update_book(id, 'reader', reader);
-                this.update_book(id, 'expiration_date', date);
+                book.reader = reader;
+                book.expiration_date = date;
                 return true;
             }
         }
@@ -89,8 +89,8 @@ class Library {
     return_book(id) {
         let book = this.get_book(id);
         if (book != undefined) {
-            this.update_book(id, 'reader', null);
-            this.update_book(id, 'expiration_date', null);
+            book.reader = null;
+            book.expiration_date = null;
         }
     }
 
