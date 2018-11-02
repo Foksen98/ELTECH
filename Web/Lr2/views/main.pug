@@ -48,6 +48,12 @@ block content
                     label Изображение обложки
                     input#editBookImage(class="w3-input" type="text")
                 p
+                    label Читатель
+                    input#editBookReader(class="w3-input" type="text" required disabled)
+                p
+                    label Срок возврата
+                    input#editBookExpirationDate(class="w3-input" type="text" disabled)
+                p
                     input#editBookSubmit(type="submit" class="w3-btn w3-ripple w3-blue w3-border w3-margin" value="Сохранить")
 
     div#addReaderModal(class="w3-modal")

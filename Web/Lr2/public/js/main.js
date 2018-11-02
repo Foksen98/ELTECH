@@ -23,6 +23,7 @@ function buildBookCard(id, book) {
                     </div>
                     <div class="w3-threequarter">
                         <ul style="font-size:1.3em;">
+                            <li><strong>НЕТ В НАЛИЧИИ</strong></li>
                             <li>Автор: <strong>${book.author}</strong></li>
                             <li>Год: <strong>${book.publication_date}</strong></li>
                             <li>Читатель: <strong>${book.reader}</strong></li>
@@ -32,6 +33,7 @@ function buildBookCard(id, book) {
                 </div>
                 <footer class="w3-red w3-padding">
                     <button type="button" id="${id}" class="returnButton w3-btn w3-ripple w3-blue w3-border">Вернуть</button>
+                    <button type="button" class="editButton w3-btn w3-ripple w3-pale-green w3-border w3-margin-right" id="${id}">Редактировать</button>
                 </footer>
             </div>
     `;
@@ -47,6 +49,7 @@ function buildBookCard(id, book) {
                     </div>
                     <div class="w3-threequarter">
                         <ul style="font-size:1.3em;">
+                            <li><strong>ЕСТЬ В НАЛИЧИИ</strong></li>
                             <li>Автор: <strong>${book.author}</strong></li>
                             <li>Год: <strong>${book.publication_date}</strong></li>
                         </ul>
@@ -248,6 +251,14 @@ function update_listeners() {
                     document.getElementById('editBookAuthor').value = response.author;
                     document.getElementById('editBookYear').value = response.publication_date;
                     document.getElementById('editBookImage').value = response.image_url;
+                    if (response.reader == null) {
+                        document.getElementById('editBookReader').value = "";
+                        document.getElementById('editBookExpirationDate').value = "";
+                    }
+                    else {
+                        document.getElementById('editBookReader').value = response.reader;
+                        document.getElementById('editBookExpirationDate').value = moment(parseInt(response.expiration_date)).format('DD-MM-YYYY');
+                    }
                     document.getElementById('editBookSubmit').setAttribute('book_id', editButtons[i].id);
                     editBookModal.style.display = 'block';
                 })
