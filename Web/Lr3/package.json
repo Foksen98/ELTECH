@@ -1,0 +1,14 @@
+{
+  "name": "lr3",
+  "version": "1.0.0",
+  "description": "web lr3 (auction)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "9IqepHbIu Fu3uK",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
