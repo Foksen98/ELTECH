@@ -1,5 +1,5 @@
 class Picture {
-    constructor(title, description, author, creation_date, image_url, price, min_step, max_step) {
+    constructor(title, description, author, creation_date, image_url = '/public/images/image-square.png', price, min_step, max_step) {
         this.title = title;
         this.decsription = description;
         this.author = author;

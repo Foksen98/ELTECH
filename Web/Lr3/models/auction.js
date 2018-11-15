@@ -26,17 +26,17 @@ class Auction {
         return (Math.random().toString(16).slice(2) + (new Date()).getTime()).toString();
     }
 
-    // создание экземпляра картины
-    create_picture(title, description, author, creation_date, image_url, price, min_step, max_step) {
-        let picture = new pictures.Picture(title, description, author, creation_date, image_url, price, min_step, max_step);
-        this.pictures[Auction.generate_id()] = picture;
-        this.save();
-    }
-
     // создание экземпляра участника
     create_user(name, balance) {
         let user = new users.User(name, balance);
         this.users[Auction.generate_id()] = user;
+        this.save();
+    }
+
+    // создание экземпляра картины
+    create_picture(title, description, author, creation_date, image_url, price, min_step, max_step) {
+        let picture = new pictures.Picture(title, description, author, creation_date, image_url, price, min_step, max_step);
+        this.pictures[Auction.generate_id()] = picture;
         this.save();
     }
 
@@ -48,6 +48,7 @@ class Auction {
     // вернуть пользователя
     get_user(id) {
         return this.users[id];
+    }
 
     // вернуть все картины
     get_all_pictures() {
@@ -57,6 +58,22 @@ class Auction {
     // вернуть всех пользователей
     get_all_users() {
         return this.users;
+    }
+
+    // обновить данные книги
+    update_settings(date, timeout, countdown, pause) {
+        let settings = this.get_settings(id);
+        if (settings != undefined) {
+            settings.date = date;
+            settings.timeout = timeout;
+            settings.countdown = countdown;
+            settings.pause = pause;
+            this.settings = settings;
+            this.save();
+            return true;
+        }
+        return false;
+    }
 
     // обновить данные книги
     update_picture(title, description, author, creation_date, image_url, price, min_step, max_step) {

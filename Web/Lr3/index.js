@@ -1,7 +1,7 @@
 const express = require("express");
 const server = express();
 const bodyParser = require('body-parser');
-const routes = require("./api-routes");
+const routes = require("./routes");
 
 server.engine('pug', require('pug').__express)
 
@@ -16,7 +16,7 @@ server.set("view engine", "pug");
 server.set("views", `./views`);
 // Запросы
 server.get('/', (req, res, next) => {
-    res.render("admin/settings");
+    res.render("/admin/main/");
 });
 // Порт
 server.listen(3000);
