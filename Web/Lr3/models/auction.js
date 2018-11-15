@@ -40,6 +40,11 @@ class Auction {
         this.save();
     }
 
+    // вернуть Настройки
+    get_settings() {
+        return this.settings;
+    }
+
     // вернуть картину
     get_picture(id) {
         return this.pictures[id];
@@ -62,7 +67,7 @@ class Auction {
 
     // обновить данные книги
     update_settings(date, timeout, countdown, pause) {
-        let settings = this.get_settings(id);
+        let settings = this.get_settings();
         if (settings != undefined) {
             settings.date = date;
             settings.timeout = timeout;

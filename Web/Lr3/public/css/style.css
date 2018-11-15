@@ -5,3 +5,7 @@ body {
     height: 100%;
     background-color: #FFDAB9
 }
+
+h1 {
+    text-align: center;
+}

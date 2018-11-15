@@ -6,7 +6,7 @@ const pict_auction = new auctions.Auction();
 // настройки аукциона
 router.get('/settings/', (req, res, next) => {
     let settings = pict_auction.get_settings();
-    res.render("admin/settings/", {
+    res.render("admin/settings", {
         date: settings.date,
         timeout: settings.timeout,
         countdown: settings.countdown,
@@ -17,14 +17,15 @@ router.get('/settings/', (req, res, next) => {
 // изменение настроек
 router.post('/settings/', (req, res, next) => {
     pict_auction.update_settings(req.body.date, req.body.timeout, req.body.countdown, req.body.pause);
-    res.sendStatus(200);
+    res.redirect('/settings/');
     next();
 });
 
 // /pictures/
 // таблица с инфо о картинах
 router.get('/pictures/', (req, res, next) => {
-    res.json(pict_auction.get_pictures(req.query['filter']));
+    let pictures = pict_auction.get_pictures();
+    res.render('/pictures')
     next();
 });
 
