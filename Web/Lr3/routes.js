@@ -24,8 +24,10 @@ router.post('/settings/', (req, res, next) => {
 // /pictures/
 // таблица с инфо о картинах
 router.get('/pictures/', (req, res, next) => {
-    let pictures = pict_auction.get_pictures();
-    res.render('/pictures')
+    let pictures = pict_auction.get_all_pictures();
+    res.render('admin/pictures', {
+        pictures: pictures
+    });
     next();
 });
 
@@ -46,6 +48,23 @@ router.get('/pictures/:id/', (req, res, next) => {
 // изменение инфо о картине
 router.put('/pictures/:id/', (req, res, next) => {
     pict_auction.update_picture(req.body.title, req.body.description, req.body.author, req.body.creation_date, req.body.image_url, req.body.price, req.body.min_step, req.body.max_step);
+    res.sendStatus(200);
+    next();
+});
+
+// /users/
+// таблица с инфо об участниках
+router.get('/users/', (req, res, next) => {
+    let users = pict_auction.get_all_users();
+    res.render('admin/users', {
+        users: users
+    });
+    next();
+});
+
+// добавление нового участника
+router.post('/users/', (req, res, next) => {
+    pict_auction.create_user(req.body.name, req.body.balance);
     res.sendStatus(200);
     next();
 });

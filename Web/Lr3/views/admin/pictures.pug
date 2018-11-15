@@ -2,3 +2,23 @@ extends base.pug
 
 block content
     h1 Список картин
+
+    table(class="table table-bordered")
+        thead
+            tr
+                th(style="width: 40%; text-align: center") Название
+                th(style="width: 30%; text-align: center") Автор
+                th(style="width: 30%; text-align: center") Год
+        tbody(style = "text-align: center")
+            each picture in pictures
+                tr
+                    td(style="vertical-align: middle")=picture.title
+                    td(style="vertical-align: middle")=picture.author
+                    td(style="vertical-align: middle")=picture.creation_date
+                    td(style = "border-style: hidden; border-left: inherit")
+                        if picture.in == "True"
+                            a(role = "button" class="btn btn-danger")
+                                img(src="/public/images/open-iconic-master/svg/circle-x.svg")
+                        else
+                            a(role = "button" class="btn btn-info")
+                                img(src="/public/images/open-iconic-master/svg/plus.svg")

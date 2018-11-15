@@ -1,1 +1,11 @@
-{"settings":{"date":"12345","timeout":"300","countdown":"60","pause":"120"},"users":{"831d982acab851540465417025":{"name":"Константин","balance":"10000","in":"True"}},"pictures":{"831d982acab851540465417027":{"title":"1984","description":"Антиутопия","author":"Дж. Оруэлл","creation_date":"1949","image_url":"/public/images/1984.jpeg","price":"1000","min_step":"10","max_step":"100","in":"True"}}}
+{
+  "settings":
+      {"date":"12345","timeout":"300","countdown":"60","pause":"120"},
+  "users":
+      {"831d982acab851540465417025":{"name":"Константин","balance":"10000","in":"True"}},
+  "pictures":
+      {"831d982acab851540465417027":
+          {"title":"1984","description":"Антиутопия","author":"Дж. Оруэлл","creation_date":"1949","image_url":"/public/images/1984.jpeg","price":"1000","min_step":"10","max_step":"100","in":"True"},
+       "831d982acab851540465417026":
+          {"title":"Мы","description":"Антиутопия","author":"Дж. Оруэлл","creation_date":"1949","image_url":"/public/images/Мы.jpeg","price":"1000","min_step":"10","max_step":"100","in":"False"}}  
+}
