@@ -16,7 +16,7 @@ server.set("view engine", "pug");
 server.set("views", `./views`);
 // Запросы
 server.get('/', (req, res, next) => {
-    res.render("admin/main");
+    res.render("admin/settings");
 });
 // Порт
 server.listen(3000);

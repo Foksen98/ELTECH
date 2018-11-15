@@ -1,0 +1,97 @@
+const fs = require("fs");
+const pictures = require("./picture");
+const users = require("./user");
+
+class Auction {
+
+    constructor() {
+        let settings = {}
+        let users = {}
+        let pictures = {}
+        try {
+            settings = JSON.parse(fs.readFileSync('/home/foksen/Programs/Repo/ELTECH/Web/Lr3/database.json', 'utf8'))['settings'];
+            users = JSON.parse(fs.readFileSync('/home/foksen/Programs/Repo/ELTECH/Web/Lr3/database.json', 'utf8'))['users'];
+            pictures = JSON.parse(fs.readFileSync('/home/foksen/Programs/Repo/ELTECH/Web/Lr3/database.json', 'utf8'))['pictures'];
+        }
+        catch (err) {
+            console.log("Error while reading file", err);
+        }
+        this.settings = settings;
+        this.users = users;
+        this.pictures = pictures;
+    }
+
+    // генерация id
+    static generate_id() {
+        return (Math.random().toString(16).slice(2) + (new Date()).getTime()).toString();
+    }
+
+    // создание экземпляра картины
+    create_picture(title, description, author, creation_date, image_url, price, min_step, max_step) {
+        let picture = new pictures.Picture(title, description, author, creation_date, image_url, price, min_step, max_step);
+        this.pictures[Auction.generate_id()] = picture;
+        this.save();
+    }
+
+    // создание экземпляра участника
+    create_user(name, balance) {
+        let user = new users.User(name, balance);
+        this.users[Auction.generate_id()] = user;
+        this.save();
+    }
+
+    // вернуть картину
+    get_picture(id) {
+        return this.pictures[id];
+    }
+
+    // вернуть пользователя
+    get_user(id) {
+        return this.users[id];
+
+    // вернуть все картины
+    get_all_pictures() {
+        return this.pictures;
+    }
+
+    // вернуть всех пользователей
+    get_all_users() {
+        return this.users;
+
+    // обновить данные книги
+    update_picture(title, description, author, creation_date, image_url, price, min_step, max_step) {
+        let picture = this.get_picture(id);
+        if (picture != undefined) {
+            picture.title = title;
+            picture.decsription = description;
+            picture.author = author;
+            picture.creation_date = creation_date;
+            picture.image_url = image_url;
+            picture.price = price;
+            picture.min_step = min_step;
+            picture.max_step = max_step;
+            this.pictures[id] = picture;
+            this.save();
+            return true;
+        }
+        return false;
+    }
+
+    // участие / неучастие в аукционе
+    change_status(object) {
+        object.in = !(object.in);
+        this.save();
+    }
+
+    // сохранение в БД
+    save() {
+        fs.writeFile('/home/foksen/Programs/Repo/ELTECH/Web/Lr3/database.json', JSON.stringify(this), (err) => {
+            if (err) throw err;
+            console.log('The file has been saved!');
+        });
+    }
+}
+
+module.exports = {
+    Auction: Auction
+}
