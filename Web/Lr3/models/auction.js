@@ -81,7 +81,7 @@ class Auction {
     }
 
     // обновить данные книги
-    update_picture(title, description, author, creation_date, image_url, price, min_step, max_step) {
+    update_picture(id, title, description, author, creation_date, image_url, price, min_step, max_step) {
         let picture = this.get_picture(id);
         if (picture != undefined) {
             picture.title = title;

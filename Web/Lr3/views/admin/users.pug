@@ -2,21 +2,27 @@ extends base.pug
 
 block content
     h1 Список участников
-
-    table(class="table table-bordered")
-        thead
-            tr
-                th(style="width: 60%; text-align: center") Имя
-                th(style="width: 40%; text-align: center") Баланс
-        tbody(style = "text-align: center")
-            each user in users
-                tr
-                    td(style="vertical-align: middle")=user.name
-                    td(style="vertical-align: middle")=user.balance
-                    td(style = "border-style: hidden; border-left: inherit")
-                        if user.in == "True"
-                            a(role = "button" class="btn btn-danger")
-                                img(src="/public/images/open-iconic-master/svg/circle-x.svg")
-                        else
-                            a(role = "button" class="btn btn-info")
-                                img(src="/public/images/open-iconic-master/svg/plus.svg")
+    br
+    div(class="row")
+        div(class="col-sm-1")
+        div(class="col-sm-8")
+            table(class="table table-bordered")
+                thead
+                    tr
+                        th(style="width: 50%; text-align: center") Имя
+                        th(style="width: 35%; text-align: center") Баланс
+                        th(style="width: 5%; border-style: hidden; border-left: inherit")
+                tbody(style = "text-align: center; vertical-align: middle")
+                    each user in users
+                        tr
+                            td(style="vertical-align: middle")=user.name
+                            td(style="vertical-align: middle")=user.balance
+                            td(style = "text-align: left; border-style: hidden; border-left: inherit")
+                                if user.in == "True"
+                                    a(role = "button" class="btn btn-danger")
+                                        img(src="/public/images/open-iconic-master/svg/circle-x.svg")
+                                else
+                                    a(role = "button" class="btn btn-info")
+                                        img(src="/public/images/open-iconic-master/svg/plus.svg")
+        div(class="col-sm-3")
+            a(role = "button" class="btn btn-lg btn-success") Добавить пользователя

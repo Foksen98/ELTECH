@@ -2,14 +2,16 @@ extends base.pug
 
 block content
     h1 Настройки аукциона
+    br
     form(action="/settings/", method="post")
         div(class="form-group")
             label Дата
-            input(class="form-control" type="text" name="date" value=date)
+            input(class="form-control" id="date" type="datetime-local" name="date" value=settings.date)
             label Таймаут
-            input(class="form-control" type="text" name="timeout" value=timeout)
+            input(class="form-control" type="text" name="timeout" value=settings.timeout)
             label Отсчёт
-            input(class="form-control" type="text" name="countdown" value=countdown)
+            input(class="form-control" type="text" name="countdown" value=settings.countdown)
             label Пауза
-            input(class="form-control" type="text" name="pause" value=pause)
+            input(class="form-control" type="text" name="pause" value=settings.pause)
+            br
             input(type="submit" class="btn btn-primary" value="Сохранить")
