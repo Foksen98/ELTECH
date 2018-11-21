@@ -101,7 +101,6 @@ class Auction {
 
     // участие / неучастие в аукционе
     change_status(object) {
-        console.log(object);
         object.in = !(object.in);
         this.save();
     }

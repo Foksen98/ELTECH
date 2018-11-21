@@ -41,10 +41,10 @@ block content
                             td(style="vertical-align: middle")=user.balance
                             td(style = "text-align: left; border-style: hidden; border-left: inherit")
                                 if user.in == "true"
-                                    a(role = "button" class="btn btn-danger")
+                                    a(role = "button" id="pict_status" pict_id=key status="true" class="btn btn-danger")
                                         i(class="glyphicon glyphicon-trash")
                                 else
-                                    a(role = "button" class="btn btn-info")
+                                    a(role = "button" id="pict_status" pict_id=key status="true" class="btn btn-info")
                                         i(class="glyphicon glyphicon-plus")
         div(class="col-sm-3")
             a(role = "button" id="add_button" class="btn btn-lg btn-success") Добавить пользователя

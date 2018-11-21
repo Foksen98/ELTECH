@@ -75,7 +75,6 @@ router.post('/users/', (req, res, next) => {
 // смена статуса участия картины
 router.post('/pictures/status/:id/', (req, res, next) => {
     let picture = pict_auction.get_picture(req.params.id);
-    console.log(picture);
     pict_auction.change_status(picture);
     res.sendStatus(200);
     next();
