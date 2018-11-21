@@ -8,7 +8,7 @@ class Picture {
         this.price = price;
         this.min_step = min_step;
         this.max_step = max_step;
-        this.in = False
+        this.in = false;
     }
 }
 

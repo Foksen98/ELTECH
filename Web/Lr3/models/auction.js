@@ -101,6 +101,7 @@ class Auction {
 
     // участие / неучастие в аукционе
     change_status(object) {
+        console.log(object);
         object.in = !(object.in);
         this.save();
     }
@@ -109,7 +110,6 @@ class Auction {
     save() {
         fs.writeFile('/home/foksen/Programs/Repo/ELTECH/Web/Lr3/database.json', JSON.stringify(this), (err) => {
             if (err) throw err;
-            console.log('The file has been saved!');
         });
     }
 }

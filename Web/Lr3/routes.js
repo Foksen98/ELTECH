@@ -68,20 +68,21 @@ router.get('/users/', (req, res, next) => {
 // добавление нового участника
 router.post('/users/', (req, res, next) => {
     pict_auction.create_user(req.body.name, req.body.balance);
-    res.sendStatus(200);
+    res.redirect('/users/');
     next();
 });
 
 // смена статуса участия картины
-router.put('/pictures/status/:id/', (req, res, next) => {
+router.post('/pictures/status/:id/', (req, res, next) => {
     let picture = pict_auction.get_picture(req.params.id);
+    console.log(picture);
     pict_auction.change_status(picture);
     res.sendStatus(200);
     next();
 });
 
 // смена статуса участия участника
-router.put('/users/status/:id/', (req, res, next) => {
+router.post('/users/status/:id/', (req, res, next) => {
     let user = pict_auction.get_picture(req.params.id);
     pict_auction.change_status(user);
     res.sendStatus(200);

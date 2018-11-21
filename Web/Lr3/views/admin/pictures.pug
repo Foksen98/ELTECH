@@ -39,7 +39,7 @@ block content
     div(class="row")
         div(class="col-sm-1")
         div(class="col-sm-8")
-            table(class="table table-bordered")
+            table(class="table table-bordered table-light")
                 thead
                     tr
                         th(style="width: 30%; text-align: center") Название
@@ -54,11 +54,11 @@ block content
                             td=picture.author
                             td=picture.creation_date
                             td(style = "text-align: left; border-style: hidden; border-left: inherit")
-                                if picture.in == "True"
-                                    a(role = "button" class="btn btn-danger")
-                                        img(src="/public/images/open-iconic-master/svg/circle-x.svg")
+                                if picture.in == "true"
+                                    a(role = "button" id="pict_status" pict_id=key status="true" class="btn btn-danger")
+                                        i(class="glyphicon glyphicon-trash")
                                 else
-                                    a(role = "button" class="btn btn-info")
-                                        img(src="/public/images/open-iconic-master/svg/plus.svg")
+                                    a(role = "button" id="pict_status" pict_id=key status="true" class="btn btn-info")
+                                        i(class="glyphicon glyphicon-plus")
         div(class="col-sm-3")
             a(role = "button" id="add_button" class="btn btn-lg btn-success") Добавить картину
