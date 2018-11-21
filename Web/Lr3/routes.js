@@ -72,18 +72,36 @@ router.post('/users/', (req, res, next) => {
     next();
 });
 
+// /users/:id/
+// инфо об участнике
+router.get('/users/:id/', (req, res, next) => {
+    user_id = req.params.id;
+    let user = pict_auction.get_user(user_id);
+    res.render('admin/user', {
+        user: user,
+        user_url: '/users/' + user_id + '/'
+    });
+    next();
+});
+
+// изменение инфо об участнике
+router.post('/users/:id/', (req, res, next) => {
+    user_id = req.params.id;
+    pict_auction.update_user(user_id, req.body.name, req.body.balance);
+    res.redirect('/users/' + user_id + '/');
+    next();
+});
+
 // смена статуса участия картины
 router.post('/pictures/status/:id/', (req, res, next) => {
-    let picture = pict_auction.get_picture(req.params.id);
-    pict_auction.change_status(picture);
+    pict_auction.change_status(req.params.id);
     res.sendStatus(200);
     next();
 });
 
 // смена статуса участия участника
 router.post('/users/status/:id/', (req, res, next) => {
-    let user = pict_auction.get_picture(req.params.id);
-    pict_auction.change_status(user);
+    pict_auction.change_status(req.params.id);
     res.sendStatus(200);
     next();
 });

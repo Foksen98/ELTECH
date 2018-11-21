@@ -54,11 +54,11 @@ block content
                             td=picture.author
                             td=picture.creation_date
                             td(style = "text-align: left; border-style: hidden; border-left: inherit")
-                                if picture.in == "true"
-                                    a(role = "button" id="pict_status" pict_id=key status="true" class="btn btn-danger")
+                                if picture.in
+                                    a(role = "button" pict_id=key status="true" class="btn btn-danger pict_status")
                                         i(class="glyphicon glyphicon-trash")
                                 else
-                                    a(role = "button" id="pict_status" pict_id=key status="false" class="btn btn-info")
+                                    a(role = "button" pict_id=key status="false" class="btn btn-info pict_status")
                                         i(class="glyphicon glyphicon-plus")
         div(class="col-sm-3")
             a(role = "button" id="add_button" class="btn btn-lg btn-success") Добавить картину

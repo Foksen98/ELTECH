@@ -80,7 +80,7 @@ class Auction {
         return false;
     }
 
-    // обновить данные книги
+    // обновить данные картины
     update_picture(id, title, description, author, creation_date, image_url, price, min_step, max_step) {
         let picture = this.get_picture(id);
         if (picture != undefined) {
@@ -99,9 +99,31 @@ class Auction {
         return false;
     }
 
+    // обновить данные участника
+    update_user(id, name, balance) {
+        let user = this.get_user(id);
+        if (user != undefined) {
+            user.name = name;
+            user.balance = balance;
+            this.users[id] = user;
+            this.save();
+            return true;
+        }
+        return false;
+    }
+
     // участие / неучастие в аукционе
-    change_status(object) {
-        object.in = !(object.in);
+    change_status(id) {
+        let picture = this.get_picture(id);
+        if (picture) {
+            picture.in = !(picture.in);
+            this.pictures[id] = picture;
+        }
+        else {
+            let user = this.get_user(id)
+            user.in = !(user.in);
+            this.users[id] = user;
+        }
         this.save();
     }
 

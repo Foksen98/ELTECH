@@ -35,16 +35,17 @@ block content
                         th(style="width: 35%; text-align: center") Баланс
                         th(style="width: 5%; border-style: hidden; border-left: inherit")
                 tbody(style = "text-align: center; vertical-align: middle")
-                    each user in users
+                    each user, key in users
                         tr
-                            td(style="vertical-align: middle")=user.name
+                            td
+                                a(href="/users/" + key + "/" style = "color: black; text-decoration: underline")=user.name
                             td(style="vertical-align: middle")=user.balance
                             td(style = "text-align: left; border-style: hidden; border-left: inherit")
-                                if user.in == "true"
-                                    a(role = "button" id="pict_status" pict_id=key status="true" class="btn btn-danger")
+                                if user.in
+                                    a(role = "button" pict_id=key status="true" class="btn btn-danger pict_status")
                                         i(class="glyphicon glyphicon-trash")
                                 else
-                                    a(role = "button" id="pict_status" pict_id=key status="true" class="btn btn-info")
+                                    a(role = "button" pict_id=key status="true" class="btn btn-info pict_status")
                                         i(class="glyphicon glyphicon-plus")
         div(class="col-sm-3")
             a(role = "button" id="add_button" class="btn btn-lg btn-success") Добавить пользователя

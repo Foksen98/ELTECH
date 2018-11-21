@@ -6,12 +6,13 @@ $(document).ready(function() {
 });
 
 // изменение статуса
-$(document).on('click', 'a#pict_status', function() {
+$(document).on('click', 'a.pict_status', function() {
+    console.log($(this));
     let key = $(this).attr("pict_id");
     if ($(this).attr("status") == "true") {
         $(this).replaceWith(
         `
-            <a role = "button" id="pict_status" pict_id=${key} status="false" class="btn btn-info">
+            <a role = "button" pict_id=${key} status="false" class="btn btn-info pict_status">
                 <i class="glyphicon glyphicon-plus"> <i/>
             </a>
         `
@@ -20,7 +21,7 @@ $(document).on('click', 'a#pict_status', function() {
     else {
         $(this).replaceWith(
         `
-            <a role = "button" id="pict_status" pict_id=${key} status="true" class="btn btn-danger">
+            <a role = "button" pict_id=${key} status="true" class="btn btn-danger pict_status">
                 <i class="glyphicon glyphicon-trash"> <i/>
             </a>
         `
@@ -36,12 +37,12 @@ $(document).on('click', 'a#pict_status', function() {
 });
 
 // изменение статуса
-$(document).on('click', 'a#user_status', function() {
+$(document).on('click', 'a.user_status', function() {
     let key = $(this).attr("user_id");
     if ($(this).attr("status") == "true") {
         $(this).replaceWith(
         `
-            <a role = "button" id="user_status" user_id=${key} status="false" class="btn btn-info">
+            <a role = "button" user_id=${key} status="false" class="btn btn-info pict_status">
                 <i class="glyphicon glyphicon-plus"> <i/>
             </a>
         `
@@ -50,7 +51,7 @@ $(document).on('click', 'a#user_status', function() {
     else {
         $(this).replaceWith(
         `
-            <a role = "button" id="user_status" user_id=${key} status="true" class="btn btn-danger">
+            <a role = "button" user_id=${key} status="true" class="btn btn-danger pict_status">
                 <i class="glyphicon glyphicon-trash"> <i/>
             </a>
         `
