@@ -6,6 +6,7 @@ block content
     div(style="text-align: center")
         img(src=picture.image_url alt=picture.title height="400")
     br
+    label=picture.description
     form(action=pict_url, method="post")
         div(class="form-group")
             label Название

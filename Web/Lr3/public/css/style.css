@@ -14,3 +14,20 @@ form {
     margin-left: 10%;
     margin-right: 20%
 }
+
+// table {
+//     thead {
+//         background-color: #E6E6E6;
+//     },
+//     tbody {
+//         background-color: white;
+//     }
+// }
+
+table thead {
+        background-color: #E6E6E6;
+}
+
+table tbody {
+        background-color: white;
+}

@@ -85,7 +85,7 @@ class Auction {
         let picture = this.get_picture(id);
         if (picture != undefined) {
             picture.title = title;
-            picture.decsription = description;
+            picture.description = description;
             picture.author = author;
             picture.creation_date = creation_date;
             picture.image_url = image_url;

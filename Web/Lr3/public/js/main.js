@@ -42,7 +42,7 @@ $(document).on('click', 'a.user_status', function() {
     if ($(this).attr("status") == "true") {
         $(this).replaceWith(
         `
-            <a role = "button" user_id=${key} status="false" class="btn btn-info pict_status">
+            <a role = "button" user_id=${key} status="false" class="btn btn-info user_status">
                 <i class="glyphicon glyphicon-plus"> <i/>
             </a>
         `
@@ -51,7 +51,7 @@ $(document).on('click', 'a.user_status', function() {
     else {
         $(this).replaceWith(
         `
-            <a role = "button" user_id=${key} status="true" class="btn btn-danger pict_status">
+            <a role = "button" user_id=${key} status="true" class="btn btn-danger user_status">
                 <i class="glyphicon glyphicon-trash"> <i/>
             </a>
         `
