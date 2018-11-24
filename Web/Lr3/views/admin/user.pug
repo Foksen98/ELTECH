@@ -1,0 +1,13 @@
+extends base.pug
+
+block content
+    h1 Сведения о картине
+    br
+    form(action=user_url, method="post")
+        div(class="form-group")
+            label Имя
+            input(class="form-control" type="text" name="name", value=user.name)
+            label Баланс
+            input(class="form-control" type="text" name="balance", value=user.balance)
+            br
+            input(type="submit" class="btn btn-primary" value="Сохранить")

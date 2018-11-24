@@ -1,0 +1,64 @@
+extends base.pug
+
+block content
+
+    div(class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true")
+        div(class="modal-dialog modal-dialog-centered" role="document")
+            div(class="modal-content")
+                div(class="modal-header")
+                    h4(class="modal-title" id="modalLabel")
+                        b Новая картина
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true")
+                div(class="modal-body")
+                    form(action="/pictures/", method="post")
+                        div(class="form-group")
+                            label Название
+                            input(class="form-control" type="text" name="title")
+                            label Описание
+                            input(class="form-control" type="text" name="description")
+                            label Автор
+                            input(class="form-control" type="text" name="author")
+                            label Год
+                            input(class="form-control" type="text" name="creation_date")
+                            label Изображение
+                            input(class="form-control" type="text" name="image_url")
+                            label Цена
+                            input(class="form-control" type="text" name="price")
+                            label Минимальный шаг
+                            input(class="form-control" type="text" name="min_step")
+                            label Максимальный шаг
+                            input(class="form-control" type="text" name="max_step")
+                            br
+                            input(type="submit" class="btn btn-primary" value="Сохранить")
+                div(class="modal-footer")
+                    button(type="button" class="btn btn-danger" data-dismiss="modal") Отмена
+
+    h1 Список картин
+    br
+    div(class="row")
+        div(class="col-sm-1")
+        div(class="col-sm-8")
+            table(class="table table-bordered table-light")
+                thead
+                    tr
+                        th(style="width: 30%; text-align: center") Название
+                        th(style="width: 25%; text-align: center") Автор
+                        th(style="width: 10%; text-align: center") Год
+                        th(style="width: 5%; border-style: hidden; border-left: inherit")
+                tbody(style="text-align: center; vertical-align: middle")
+                    each picture, key in pictures
+                        tr
+                            td
+                                a(href="/pictures/" + key + "/" style = "color: black; text-decoration: underline")=picture.title
+                            td=picture.author
+                            td=picture.creation_date
+                            td(style = "text-align: left; border-style: hidden; border-left: inherit")
+                                if picture.in
+                                    a(role = "button" pict_id=key status="true" class="btn btn-danger pict_status")
+                                        i(class="glyphicon glyphicon-trash")
+                                else
+                                    a(role = "button" pict_id=key status="false" class="btn btn-info pict_status")
+                                        i(class="glyphicon glyphicon-plus")
+        div(class="col-sm-3")
+            a(role = "button" id="add_button" class="btn btn-lg btn-success") Добавить картину
