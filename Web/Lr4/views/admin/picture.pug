@@ -1,0 +1,28 @@
+extends base.pug
+
+block content
+    h1 Сведения о картине
+    br
+    div(style="text-align: center")
+        img(src=picture.image_url alt=picture.title height="400")
+    br
+    form(action=pict_url, method="post")
+        div(class="form-group")
+            label Название
+            input(class="form-control" type="text" name="title" value=picture.title)
+            label Описание
+            input(class="form-control" type="text" name="description" value=picture.description)
+            label Автор
+            input(class="form-control" type="text" name="author" value=picture.author)
+            label Год
+            input(class="form-control" type="text" name="creation_date" value=picture.creation_date)
+            label Изображение
+            input(class="form-control" type="text" name="image_url" value=picture.image_url)
+            label Цена
+            input(class="form-control" type="text" name="price" value=picture.price)
+            label Минимальный шаг
+            input(class="form-control" type="text" name="min_step" value=picture.min_step)
+            label Максимальный шаг
+            input(class="form-control" type="text" name="max_step" value=picture.max_step)
+            br
+            input(type="submit" class="btn btn-primary" value="Сохранить")
