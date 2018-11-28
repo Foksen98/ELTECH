@@ -65,6 +65,15 @@ class Auction {
         return this.users;
     }
 
+    // проверить наличие пользователя
+    is_user(name) {
+        for (let id in this.users) {
+            if (this.users[id].name == name)
+                return this.users[id];
+        }
+        return null;
+    }
+
     // обновить данные книги
     update_settings(date, timeout, countdown, pause) {
         let settings = this.get_settings();

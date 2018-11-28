@@ -1,0 +1,12 @@
+extends base.pug
+
+block content
+    h1 Авторизация
+    br
+    br
+    form#login_form(action="/main/login/", method="post")
+        div(class="form-group")
+            input(class="form-control" id="date" type="еуче" name="name" placeholder="Введите ваш логин")
+            br
+            br
+            input(type="submit" class="btn btn-lg btn-success" value="Войти")
