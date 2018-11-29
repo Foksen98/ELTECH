@@ -9,6 +9,7 @@ class Picture {
         this.min_step = min_step;
         this.max_step = max_step;
         this.in = false;
+        this.owner = "";
     }
 }
 

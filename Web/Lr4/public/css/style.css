@@ -28,3 +28,14 @@ table tbody {
     margin-left: 35%;
     margin-right: 35%
 }
+
+.card {
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%
+}
+
+#auction_log {
+    height: 300px;
+    overflow-y: scroll;
+}

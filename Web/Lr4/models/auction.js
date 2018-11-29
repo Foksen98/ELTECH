@@ -60,6 +60,16 @@ class Auction {
         return this.pictures;
     }
 
+    // вернуть картины пользователя
+    get_user_pictures(user_id) {
+        let pictures = []
+        for (let id in this.pictures) {
+            if (this.pictures[id].owner == user_id)
+                pictures.push(this.pictures[id]);
+        }
+        return pictures;
+    }
+
     // вернуть всех пользователей
     get_all_users() {
         return this.users;
@@ -69,7 +79,7 @@ class Auction {
     is_user(name) {
         for (let id in this.users) {
             if (this.users[id].name == name)
-                return this.users[id];
+                return id;
         }
         return null;
     }

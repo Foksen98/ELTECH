@@ -2,3 +2,38 @@ extends base.pug
 
 block content
     h1 Главная
+    div(class="row")
+        div(class="col-sm-3")
+            div(class="card")
+                img(class="card-img-top", src="/public/images/avatar.png")
+                div(class="card-block")
+                    h3(class="card-title")
+                        b=user.name
+                ul(class="list-group list-group-flush")
+                    li(class="list-group-item")
+                        span(style="font-size: 18")=user.balance
+                        =' '
+                        i(class="glyphicon glyphicon-rub")
+                    li(class="list-group-item")
+                        a(class="btn btn-info" type="button" href=user_pict_url)
+                            i(class="glyphicon glyphicon-picture")
+                            ='  Покупки'
+        div(class="col-sm-6")
+            div(class="card")
+                img(class="card-img-top", src="/public/images/image-square.png", height="400")
+                div(class="card-block")
+                    h3(class="card-title")
+                        b Название картины
+                ul(class="list-group list-group-flush")
+                    li(class="list-group-item") Описание картины
+                    li(class="list-group-item")
+        div(class="col-sm-3")
+            div(class="card")
+                div(class="card-block")
+                    h3(class="card-title")
+                        b Ход аукциона
+                ul#auction_log(class="list-group list-group-flush")
+                    li(class="list-group-item")
+                    li(class="list-group-item")
+                div(class="card-block")
+                    a#join_auction(class="btn btn-info" type="button" user_id=user_id) Принять участие

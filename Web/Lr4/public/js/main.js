@@ -1,67 +1,66 @@
-$(document).ready(function() {
-    // добавление картин и  пользователей
-    $("#add_button").click(function() {
-        $("#modal").modal("show");
-    });
-});
+const add_message = (message) => {
+    const message_block = $(
+    `
+        <li class="list-group-item">
+            <h4>${message["datetime"]}</h4>
+            <p>${message["text"]}</p>
+        </li>
+    `);
+    $("#auction_log").prepend(message_block);
+};
 
-// изменение статуса
-$(document).on('click', 'a.pict_status', function() {
-    console.log($(this));
-    let key = $(this).attr("pict_id");
-    if ($(this).attr("status") == "true") {
-        $(this).replaceWith(
-        `
-            <a role = "button" pict_id=${key} status="false" class="btn btn-info pict_status">
-                <i class="glyphicon glyphicon-plus"> <i/>
-            </a>
-        `
-        );
-    }
-    else {
-        $(this).replaceWith(
-        `
-            <a role = "button" pict_id=${key} status="true" class="btn btn-danger pict_status">
-                <i class="glyphicon glyphicon-trash"> <i/>
-            </a>
-        `
-        );
-    }
-    $.ajax( {
-        type: 'POST',
-        url: '/admin/pictures/status/' + $(this).attr("pict_id") + '/',
-        dataType: "json",
-        success: function() {},
-        error: function() {}
+// соединение через сокет
+const init_socket = (user_id) => {
+    socket = io.connect("http://localhost:4000");
+    socket.on("init", (response) => {
+        response = JSON.parse(response);
+        add_message(response.message);
+        socket.json.emit("hello", JSON.stringify({
+            user_id: user_id
+        }));
     });
-});
+    socket.on("message", (response) => {
+        response = JSON.parse(response);
+        add_message(response.message);
+    });
+    // socket.on("auctionStarted", (response) => {
+    //     response = JSON.parse(response);
+    //     addMessage(response.message);
+    //     startAuctionTimer(response.payload.start_time);
+    // });
+    // socket.on("pictureAuctionStarted", (response) => {
+    //     response = JSON.parse(response);
+    //     addMessage(response.message);
+    //     displayPicture(response.payload['painting']);
+    //     $("#picture_container").fadeIn();
+    //     $("#picture_timer_block").show();
+    //     startPictureCountDown(response.payload.timeout)
+    // });
+    // socket.on("pictureAuctionFinished", (response) => {
+    //     response = JSON.parse(response);
+    //     addMessage(response.message);
+    //     $("#picture_container").fadeOut();
+    // });
+    // socket.on("auctionFinished", (response) => {
+    //     response = JSON.parse(response);
+    //     addMessage(response.message);
+    //     stopAuctionTimer();
+    // });
+    // socket.on("changePrice", (response) => {
+    //     response = JSON.parse(response);
+    //     $("#current_picture_price").text(response.payload.new_price);
+    // });
+    // socket.on("changeCashReserve", (response) => {
+    //     response = JSON.parse(response);
+    //     addMessage(response.message);
+    //     $("#participant_cache").text(response.payload.cash_reserve);
+    // });
+};
 
-// изменение статуса
-$(document).on('click', 'a.user_status', function() {
-    let key = $(this).attr("user_id");
-    if ($(this).attr("status") == "true") {
-        $(this).replaceWith(
-        `
-            <a role = "button" user_id=${key} status="false" class="btn btn-info user_status">
-                <i class="glyphicon glyphicon-plus"> <i/>
-            </a>
-        `
-        );
-    }
-    else {
-        $(this).replaceWith(
-        `
-            <a role = "button" user_id=${key} status="true" class="btn btn-danger user_status">
-                <i class="glyphicon glyphicon-trash"> <i/>
-            </a>
-        `
-        );
-    }
-    $.ajax( {
-        type: 'POST',
-        url: '/admin/users/status/' + $(this).attr("user_id") + '/',
-        dataType: "json",
-        success: function() {},
-        error: function() {}
+$(document).ready(() => {
+    // принять участие
+    $("#join_auction").click(() => {
+        let user_id = $(this).attr('user_id');
+        init_socket(user_id);
     });
 });
