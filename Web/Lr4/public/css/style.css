@@ -39,3 +39,7 @@ table tbody {
     height: 300px;
     overflow-y: scroll;
 }
+
+#progressbar {
+    text-align: center;
+}

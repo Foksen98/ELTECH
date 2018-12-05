@@ -54,7 +54,7 @@ block content
                             td=picture.author
                             td=picture.creation_date
                             td(style = "text-align: left; border-style: hidden; border-left: inherit")
-                                if picture.owner
+                                if picture.owner != ""
                                     a(role = "button" class="btn btn-success")
                                         i(class="glyphicon glyphicon-ok")
                                 else if picture.in

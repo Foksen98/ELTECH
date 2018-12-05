@@ -146,6 +146,19 @@ class Auction {
         this.save();
     }
 
+    // купить картину
+    buy_picture(picture_id, user_id, price) {
+        // обновление картины
+        let picture = this.get_picture(picture_id);
+        picture.price = price;
+        picture.owner = user_id;
+        // обновление пользователя
+        let user = this.get_user(user_id);
+        user.balance -= price;
+        // сохранение
+        this.save();
+    }
+
     // сохранение в БД
     save() {
         fs.writeFile('/home/foksen/Programs/Repo/ELTECH/Web/Lr4/database.json', JSON.stringify(this), (err) => {
