@@ -182,6 +182,7 @@ const startPictureCountDown = (timestamp) => {
 
 const updateProgress = (full_timeout, count) => {
     console.log("progressbar", (count / full_timeout) * 100);
+    console.log($("#progressbar"));
     $("#progressbar").progressbar({value: (count / full_timeout) * 100});
 };
 
