@@ -1,0 +1,53 @@
+extends base.pug
+
+block content
+    h1 Главная
+    div(class="row")
+        div(class="col-sm-3")
+            div(class="card")
+                img(class="card-img-top", src="/public/images/avatar.png")
+                div(class="card-block")
+                    h3(class="card-title")
+                        b=user.name
+                br
+                ul(class="list-group list-group-flush")
+                    li#balance(class="list-group-item")
+                        span(style="font-size: 18")=user.balance
+                        =' '
+                        i(class="glyphicon glyphicon-rub")
+                    li(class="list-group-item")
+                        a(class="btn btn-info" type="button" href=user_pict_url)
+                            i(class="glyphicon glyphicon-picture")
+                            ='  Покупки'
+
+        div(class="col-sm-6")
+            div(class="card")
+                img#pict_img(class="card-img-top", height="400")
+                div(class="card-block")
+                    h3(class="card-title")
+                        b#pict_title
+                br
+                ul(class="list-group list-group-flush")
+                    li#pict_description(class="list-group-item")
+                    li#pict_price(class="list-group-item")
+                    li#pict_min_step(class="list-group-item")
+                    li#pict_max_step(class="list-group-item")
+                br
+                div#progressbar(class="progressbar", value='50')
+                br
+                ul(class="list-group list-group-flush")
+                    li(class="list-group-item")
+                        input#new_price(type="text")
+                    li(class="list-group-item")
+                        a#vote_price(class="btn btn-success", type="button", user_id=user_id) Купить
+
+        div(class="col-sm-3")
+            div(class="card")
+                div(class="card-block")
+                    h3(class="card-title")
+                        b Ход аукциона
+                br
+                ul#auction_log(class="list-group list-group-flush")
+                br
+                div(class="card-block")
+                    a#join_auction(class="btn btn-info", type="button", user_id=user_id) Принять участие
