@@ -1,0 +1,68 @@
+<!-- 9IqePHbIu_Fu3uK © 2018 -->
+
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+ 		     <title>Супер-мега-платформер (нет)</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <!-- Вход -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <h2>Добро пожаловать в ЛЭТИ!</h2>
+                <h3>Вводи номер своей зачётки и начинай закрывать сессию!</h3>
+                <input type="text" name="nickname" placeholder="123456" id="nick" size="20"/>
+                <br>
+                <a onclick="gameManager.play()" class="button" id="start">Страдать</a>
+            </div>
+        </div>
+
+        <!-- Игра -->
+        <canvas id="canvasId" width="1700" height="850"></canvas>
+
+        <!-- Текущий результат -->
+        <div id="live_score">
+            <p>Собрано долгов: <b id="debts"></b></p>
+            <p>Курс: <b id="level"></b></p>
+        </div>
+        <div id="result">
+            <h2 id="hBody"></h2>
+            <a id="aResult" href="/index.html"></a>
+        </div>
+
+        <!-- Таблица результатов -->
+        <div id="scoretable">
+            <h2>Окончившие ЛЭТИ</h2>
+            <h3>Ты можешь быть в их числе!</h3>
+            <table>
+                <colgroup>
+                    <col width="30%">
+                    <col width="40%">
+                    <col width="30%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Время</th>
+                        <th>Имя</th>
+                        <th>Количество долгов</th>
+                    </tr>
+                </thead>
+                <tbody id="records"></tbody>
+            </table>
+        </div>
+
+        <!-- Скрипты -->
+        <script src="src/gameManager.js"></script>
+      	<script src="src/mapManager.js"></script>
+      	<script src="src/spriteManager.js"></script>
+      	<script src="src/physicManager.js"></script>
+      	<script src="src/soundManager.js"></script>
+      	<script src="src/eventManager.js"></script>
+        <script src="src/scoreTable.js"></script>
+      	<script src="src/elements.js"></script>
+        <script src="src/utils.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
