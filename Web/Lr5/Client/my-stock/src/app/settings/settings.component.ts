@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ParamsDataService} from "../params-data.service";
+import {SettingsService} from "../settings.service";
 import DateTimeFormat = Intl.DateTimeFormat;
 import {NgForm} from "@angular/forms";
 import * as moment from 'moment';
@@ -17,32 +17,30 @@ export class SettingsComponent implements OnInit {
   end_datetime: string = "";
   timeout: string = "";
 
-  constructor() { }
+  constructor(private data: SettingsService) { }
 
   ngOnInit() {
     this.data.paramsState.subscribe(value => {
       this.start_datetime = moment(new Date(parseInt(value.start_datetime))).format(DATETIME_FORMAT);
       this.end_datetime = moment(new Date(parseInt(value.end_datetime))).format(DATETIME_FORMAT);
       const duration = moment.duration(parseInt(value.timeout));
-      this.timeout = HomeComponent.addZeroToTimePart(duration.hours().toString()) + ":"
-        + HomeComponent.addZeroToTimePart(duration.minutes().toString()) + ":" +
-        HomeComponent.addZeroToTimePart(duration.seconds().toString());
+      this.timeout = SettingsComponent.addZeroToTimePart(duration.minutes().toString()) + ":" +
+                     SettingsComponent.addZeroToTimePart(duration.seconds().toString());
     });
   }
 
-  static addZeroToTimePart(timepart: String) {
+  static addZeroToTimePart(timepart: string) {
     if (timepart.length < 2) {
       return "0" + timepart;
     }
     return timepart;
   }
 
-  static parseTimeout(timeout: String) {
+  static parseTimeout(timeout: string) {
     const splitted = timeout.split(":");
-    const hours = parseInt(splitted[0]) * 60 * 60 * 1000;
-    const mins = parseInt(splitted[1]) * 60 * 1000;
-    const secs = parseInt(splitted[2]) * 1000;
-    return hours + mins + secs;
+    const mins = parseInt(splitted[0]) * 60 * 1000;
+    const secs = parseInt(splitted[1]) * 1000;
+    return mins + secs;
   }
 
   getCurrentDatetime() {
@@ -50,11 +48,11 @@ export class SettingsComponent implements OnInit {
   }
 
   // сохранение настроек
-  onSubmit(f: NgForm) {
+  onSubmit(form: NgForm) {
     this.data.saveForm({
-      start_datetime: moment(f.value.startDatetime, DATETIME_FORMAT).valueOf(),
-      end_datetime: moment(f.value.endDatetime, DATETIME_FORMAT).valueOf(),
-      timeout: HomeComponent.parseTimeout(f.value.timeoutField)
+      start_datetime: moment(form.value.startDatetime, DATETIME_FORMAT).valueOf(),
+      end_datetime: moment(form.value.endDatetime, DATETIME_FORMAT).valueOf(),
+      timeout: SettingsComponent.parseTimeout(form.value.timeoutField)
     });
-
+  }
 }

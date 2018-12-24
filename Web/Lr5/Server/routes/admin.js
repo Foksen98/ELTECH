@@ -46,11 +46,11 @@ router.post('/stocks/delete', (req, res) => {
 
 // настройки
 router.get('/settings', (req, res) => {
-    return res.json(stockSettings.params);
+    return res.json(stockSettings.settings);
 });
 
 router.post('/settings/set', (req, res) => {
-    stockSettings.setParams(req.body);
+    stockSettings.set(req.body);
     return res.json({ok:true});
 });
 
