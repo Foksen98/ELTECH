@@ -3,6 +3,8 @@ const stock = require("./stock");
 const broker = require("./broker");
 const FILENAME = 'database.json';
 
+const AVTAR = 'https://codeseller.ru/wp-content/uploads/2017/09/Без-названия-1.png'
+
 class Settings {
 
     constructor() {
@@ -51,6 +53,9 @@ class Settings {
     // брокеры
     addBroker(name, balance, image_url) {
         let new_broker = undefined;
+        if (image_url == "") {
+            image_url = AVTAR;
+        }
         new_broker = new broker.Broker(name, balance, image_url);
         this.brokers[Settings.generateId()] = new_broker;
         this.save();
@@ -60,7 +65,6 @@ class Settings {
         let broker = this.brokers[id];
         if (broker !== undefined) {
             for (let property in props) {
-                console.log(property);
                 if (property in broker) {
                     broker[property] = props[property];
                 }

@@ -8,13 +8,21 @@ import { AppComponent } from './app.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BrokersComponent } from './brokers/brokers.component';
 import { StocksComponent } from './stocks/stocks.component';
+import { BrokerCardComponent } from './broker-card/broker-card.component';
+import { StockCardComponent } from './stock-card/stock-card.component';
+import { BrokerFormComponent } from './broker-form/broker-form.component';
+import { StockFormComponent } from './stock-form/stock-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SettingsComponent,
     BrokersComponent,
-    StocksComponent
+    StocksComponent,
+    BrokerCardComponent,
+    StockCardComponent,
+    BrokerFormComponent,
+    StockFormComponent
   ],
   imports: [
     BrowserModule,
