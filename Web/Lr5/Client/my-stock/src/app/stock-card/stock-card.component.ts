@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {StockService} from "../stock.service";
 
 @Component({
   selector: 'app-stock-card',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockCardComponent implements OnInit {
 
-  constructor() { }
+  @Input() stock: Object;
+  @Input() stock_id: String;
+
+  constructor(private data: StockService) { }
 
   ngOnInit() {
+  }
+
+  handleDeleteClick() {
+    this.data.deleteStock(this.stock_id);
+  }
+
+  handleEditClick() {
+    this.data.handleCloseStockForm();
+    this.data.setEditMode(true);
+    this.data.handleEditStockClicked(this.stock_id, this.stock);
   }
 
 }

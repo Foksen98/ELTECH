@@ -1,5 +1,5 @@
 <div class="w3-card-4 w3-margin-top broker">
-  <header class="w3-container w3-blue">
+  <header class="w3-container w3-pale-green">
     <h3>{{ broker.name }}</h3>
   </header>
   <div class="w3-container">
@@ -8,11 +8,11 @@
         <img [src]="broker.image_url" style="max-height: 30vh; width: 15vw" alt="{{broker.name}}">
       </div>
       <div class="w3-col" style="width: 50%">
-        <p>Баланс: <span class="w3-green w3-padding w3-margin-left">{{broker.balance}}</span></p>
+        <p>Баланс: <span class="w3-grey w3-padding w3-margin-left">{{broker.balance}}</span></p>
       </div>
     </div>
   </div>
-  <footer class="w3-container w3-blue">
+  <footer class="w3-container w3-pale-green">
     <button class="w3-button w3-yellow w3-margin-right" (click)="handleEditClick()">Редактировать</button>
     <button class="w3-button w3-margin-left w3-red" (click)="handleDeleteClick()">Удалить</button>
   </footer>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {StockService} from "../stock.service";
 
 @Component({
   selector: 'app-stocks',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StocksComponent implements OnInit {
 
-  constructor() { }
+  stock: Object;
+  objectKeys = Object.keys;
+
+  constructor(private data: StockService) { }
 
   ngOnInit() {
+    this.data.stockState.subscribe(value => {
+      this.stock = value;
+    });
+  }
+
+  handleAddStock() {
+    this.data.handleAddStockClicked();
   }
 
 }

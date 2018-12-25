@@ -1,5 +1,5 @@
 <div *ngIf="isShown==true" class="w3-card-4 w3-margin-top broker">
-  <header class="w3-container w3-blue w3-hover-yellow">
+  <header class="w3-container w3-dark-grey">
     <h3>Форма брокера</h3>
   </header>
   <div class="w3-container">
@@ -23,8 +23,8 @@
       </div>
     </div>
   </div>
-  <footer class="w3-container w3-blue">
-    <input type="submit"  [disabled]="f.invalid" class="w3-button w3-green w3-margin-right" form="brokerForm" value="Сохранить">
-    <button class="w3-button w3-danger w3-margin-right" (click)="closeForm()">Закрыть</button>
+  <footer class="w3-container w3-dark-grey">
+    <input type="submit"  [disabled]="f.invalid" class="w3-button w3-blue w3-margin-right" form="brokerForm" value="Сохранить">
+    <button class="w3-button w3-red w3-margin-right" (click)="closeForm()">Закрыть</button>
   </footer>
 </div>
