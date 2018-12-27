@@ -99,7 +99,7 @@ class GameManager {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         mapManager = new MapManager();
         mapManager.loadMap('map/map_level_' + this.levels.curr + ".json");
-        spriteManager.loadAtlas("sprites.json", "spritesheet.png");
+        spriteManager.loadAtlas("sprites.json", "spritesheet.jpg");
         this.factory['player'] = Player;
         this.factory['debt'] = Debt;
         this.factory['enemy1'] = Enemy1;
