@@ -1,13 +1,13 @@
 class GameManager {
     constructor() {
         this.factory = {};
-        this.elements = [];
-        this.debtNum = 0;
-        this.level = 0;
+        this.entities = [];
+        this.coinsNum = 0;
+        this.totalScore = 0;
         this.player = null;
         this.levels = {
             curr: 1,
-            max: 4
+            max: 3
         };
         this.nickname = "";
         this.laterKill = [];
@@ -17,19 +17,18 @@ class GameManager {
         this.player = obj;
     }
 
-    // смерть, конец уровня
     kill(obj, win = false, count) {
         if (win) {
-            this.level += count;
-            document.getElementById("level").innerHTML = gameManager.level;
+            this.totalScore += count;
+            document.getElementById("total").innerHTML = gameManager.totalScore;
 
             if (this.levels.curr === this.levels.max) {
                 soundManager.stopAll();
                 soundManager.init();
-                soundManager.play("/music/aud5.mp3", {looping: 0, volume: 0.5});
+                soundManager.play("/mus/aud5.mp3", {looping: 0, volume: 0.5});
                 scoreTable.add(nickname, obj.countCoins);
-                elem.innerHTML = 'Ура! Вы окончили универ, несмотря на все долги!';
-                elem1.innerHTML = 'Вернуться на 1 курс!';
+                elem.innerHTML = 'Ура! Кажется, у нас новый победитель!';
+                elem1.innerHTML = 'Круто, но я хочу пройти заново!';
                 result.style.display = 'block';
             } else {
                 this.levelUp();
@@ -72,16 +71,16 @@ class GameManager {
             this.player.numbR = ++i;
             this.player.numbL = 0;
         }
-        this.elements.forEach(function (e) {
+        this.entities.forEach(function (e) {
             try {
                 e.update();
             } catch (ex) {
             }
         });
         for (let i = 0; i < this.laterKill.length; i++) {
-            let idx = this.elements.indexOf(this.laterKill[i]);
+            let idx = this.entities.indexOf(this.laterKill[i]);
             if (idx > -1)
-                this.elements.splice(idx, 1);
+                this.entities.splice(idx, 1);
         }
         if (this.laterKill.length > 0)
             this.laterKill.length = 0;
@@ -91,38 +90,38 @@ class GameManager {
     }
 
     draw(ctx) {
-        for(let e = 0; e < this.elements.length; e++)
-            this.elements[e].draw(ctx);
+        for(let e = 0; e < this.entities.length; e++)
+            this.entities[e].draw(ctx);
     }
 
     loadAll() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         mapManager = new MapManager();
-        mapManager.loadMap('map/map_level_' + this.levels.curr + ".json");
-        spriteManager.loadAtlas("sprites.json", "spritesheet.jpg");
+        mapManager.loadMap(this.levels.curr + ".json");
+        spriteManager.loadAtlas("sprites.json", "spritesheet.png");
         this.factory['player'] = Player;
-        this.factory['debt'] = Debt;
+        this.factory['coins'] = Coins;
         this.factory['enemy1'] = Enemy1;
         this.factory['enemy2'] = Enemy2;
-        this.factory['book'] = Book;
-        mapManager.parseBaseElements();
+        this.factory['kosm'] = Rocket;
+        mapManager.parseEntities();
         mapManager.draw(ctx);
         eventManager.setup();
-        document.getElementById("debts").innerHTML = this.level < 0 ? "0" : this.level;
-        document.getElementById("level").innerHTML = this.levels.curr;
+        document.getElementById("pCoins").innerHTML = this.totalScore < 0 ? "0" : this.totalScore;
+        document.getElementById("total").innerHTML = this.levels.curr;
     }
 
     play() {
         this.levels.curr = 1;
-        this.level = 0;
+        this.totalScore = 0;
         nickname = document.getElementById("nick").value;
 
         if(nickname.length > 0){
             document.getElementById("myModal").style.display = "none";
 
             soundManager.init();
-            soundManager.loadArray(["/music/aud1.wav","/music/aud2.mp3", "/music/aud3.mp3", "/music/aud6.mp3", "/music/aud5.mp3"]);
-            soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
+            soundManager.loadArray(["/mus/aud1.wav","/mus/aud2.mp3", "/mus/aud3.mp3", "/mus/aud6.mp3", "/mus/aud5.mp3"]);
+            soundManager.play("/mus/aud6.mp3", {looping: 1, volume: 0.5});
             this.loadAll();
             updateWorld();
         }
@@ -132,6 +131,6 @@ class GameManager {
         this.levels.curr++;
         this.loadAll();
         updateWorld();
-        soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
+        soundManager.play("/mus/aud6.mp3", {looping: 1, volume: 0.5});
     }
 }

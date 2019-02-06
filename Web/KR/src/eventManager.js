@@ -10,7 +10,9 @@ class EventManager {
         this.bind[38] = 'up';
         document.body.addEventListener("keydown", this.onKeyDown);
         document.body.addEventListener("keyup", this.onKeyUp);
+        document.body.addEventListener("shiftKey", this.onShiftKey);
     }
+
 
     onKeyDown(event) {
         const action = eventManager.bind[event.keyCode];
@@ -22,5 +24,11 @@ class EventManager {
         const action = eventManager.bind[event.keyCode];
         if(action)
             eventManager.action[action] = false;
+    }
+
+    onShiftKey(event) {
+        const action = eventManager.bind[event.keyCode];
+        if(action)
+            eventManager.action[action] = true;
     }
 }

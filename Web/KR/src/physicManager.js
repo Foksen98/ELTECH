@@ -82,9 +82,9 @@ class PhysicManager {
         if (newX < 10) return "stop";
         newY = obj.pos_y + Math.floor(obj.move_y * obj.speed);
         let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, newY + obj.size_y / 2);
-        let e = this.BaseElementAtXY(obj, newX, newY);
-        if (e !== null && obj.onTouchBaseElement) {
-            obj.onTouchBaseElement(e);
+        let e = this.entityAtXY(obj, newX, newY);
+        if (e !== null && obj.onTouchEntity) {
+            obj.onTouchEntity(e);
         }
         if (ts !== 0 && obj.onTouchMap) {
             obj.jump = false;
@@ -98,9 +98,9 @@ class PhysicManager {
         return "move";
     }
 
-    BaseElementAtXY(obj, x, y) {
-        for(let i = 0; i < gameManager.elements.length; i++) {
-            let e = gameManager.elements[i];
+    entityAtXY(obj, x, y) {
+        for(let i = 0; i < gameManager.entities.length; i++) {
+            let e = gameManager.entities[i];
             if(e.name !== obj.name) {
                 if(x + obj.size_x < e.pos_x || y + obj.size_y < e.pos_y || x > e.pos_x + e.size_x  || y > e.pos_y + e.size_y)
                     continue;

@@ -7,7 +7,7 @@ class MapManager {
         this.tLayer = [];
         this.xCount = 0;
         this.yCount = 0;
-        this.tSize = {x: 0, y: 0};
+        this.tSize = {x: 64, y: 64};
         this.mapSize = {x: 0, y: 0};
         this.tilesets = [];
         this.imgLoadCount = 0;
@@ -130,17 +130,17 @@ class MapManager {
         return !(x + width < this.view.x || y + height < this.view.y || x > this.view.x + this.view.w || y > this.view.y + this.view.h);
     }
 
-    parseBaseElements() {
+    parseEntities() {
         if (!this.imgLoaded || !this.jsonLoaded) {
             setTimeout(() => {
-                this.parseBaseElements();
+                this.parseEntities();
             }, 100);
         } else
             for (let j = 0; j < this.mapData.layers.length; j++)
                 if (this.mapData.layers[j].type === 'objectgroup') {
-                    let elements = this.mapData.layers[j];
-                    for (let i = 0; i < elements.objects.length; i++) {
-                        let e = elements.objects[i];
+                    let entities = this.mapData.layers[j];
+                    for (let i = 0; i < entities.objects.length; i++) {
+                        let e = entities.objects[i];
                         try {
                             let obj = new gameManager.factory[e.type]();
                             obj.name = e.name;
@@ -148,7 +148,7 @@ class MapManager {
                             obj.pos_y = e.y;
                             obj.size_x = e.width;
                             obj.size_y = e.height;
-                            gameManager.elements.push(obj);
+                            gameManager.entities.push(obj);
                             if (obj.name === "player")
                                 gameManager.initPlayer(obj);
                         } catch (ex) {

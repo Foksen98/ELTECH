@@ -1,4 +1,4 @@
-class BaseElement {
+class Entity {
     constructor() {
         this.pos_x = 0;
         this.pos_y = 0;
@@ -12,12 +12,11 @@ class BaseElement {
     }
 }
 
-// Игрок
-class Player extends BaseElement {
+class Player extends Entity {
     constructor() {
         super();
         this.nickname = "";
-        this.countDebts = 0;
+        this.countCoins = 0;
         this.move_x = 0;
         this.move_y = 0;
         this.speed = 20;
@@ -38,12 +37,12 @@ class Player extends BaseElement {
         physicManager.update(this);
     }
 
-    onTouchBaseElement(obj) {
-        if (obj.name.match(/debts[\d*]/)) {
+    onTouchEntity(obj) {
+        if (obj.name.match(/coins[\d*]/)) {
             soundManager.play("/mus/aud1.wav", {looping: 0, volume: 0.5});
-            this.countDebts += 1;
-            let elem = document.getElementById('debts');
-            elem.innerHTML = this.countDebts;
+            this.countCoins += 1;
+            let elem = document.getElementById('pCoins');
+            elem.innerHTML = this.countCoins;
             obj.kill();
 
         }
@@ -67,18 +66,18 @@ class Player extends BaseElement {
     kill() {
         window.cancelAnimationFrame(ANIM);
 
-        gameManager.elements = [];
+        gameManager.entities = [];
         gameManager.kill(this);
         if (!this.win) {
             gameManager.kill(this, false);
             soundManager.stopAll();
             soundManager.init();
             soundManager.play("/mus/aud3.mp3", {looping: 0, volume: 0.5});
-            elem.innerHTML = 'Уууупс, игра окончена, дорогой друг!';
-            elem1.innerHTML = 'Хочу играть заново!';
+            elem.innerHTML = 'Вы отчислены!';
+            elem1.innerHTML = 'Хочу учиться!';
             result.style.display = 'block';
         } else {
-            gameManager.kill(this, true, this.countDebts);
+            gameManager.kill(this, true, this.countCoins);
         }
 
         document.getElementById("records").innerHTML = scoreTable.get();
@@ -92,8 +91,7 @@ class Player extends BaseElement {
     }
 }
 
-// Враг №1
-class Enemy1 extends BaseElement {
+class Enemy1 extends Entity {
     constructor() {
         super();
         this.move_x = 3;
@@ -115,8 +113,7 @@ class Enemy1 extends BaseElement {
     }
 }
 
-// Враг №2
-class Enemy2 extends BaseElement {
+class Enemy2 extends Entity {
     constructor() {
         super();
         this.move_x = 3;
@@ -138,8 +135,7 @@ class Enemy2 extends BaseElement {
     }
 }
 
-// Зачётка
-class Book extends BaseElement {
+class Rocket extends Entity {
     constructor() {
         super();
         this.move_x = 2;
@@ -148,7 +144,7 @@ class Book extends BaseElement {
     }
 
     draw(ctx) {
-        spriteManager.drawSprite(ctx, "book", this.pos_x, this.pos_y - 150);
+        spriteManager.drawSprite(ctx, "kosm", this.pos_x, this.pos_y - 150);
     }
 
     update() {
@@ -162,9 +158,8 @@ class Book extends BaseElement {
     }
 }
 
-// Долг
-class Debt extends BaseElement {
+class Coins extends Entity {
     draw() {
-        spriteManager.drawSprite(ctx, "debts", this.pos_x, this.pos_y - 100);
+        spriteManager.drawSprite(ctx, "coins", this.pos_x, this.pos_y - 100);
     }
 }
