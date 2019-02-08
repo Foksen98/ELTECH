@@ -1,4 +1,5 @@
-const canvas = document.getElementById("canvasId"), ctx = canvas.getContext("2d");
+const canvas = document.getElementById("canvasId");
+const ctx = canvas.getContext("2d");
 const elem = document.getElementById('hBody');
 const elem1 = document.getElementById('aResult');
 const result = document.getElementById('result');
@@ -11,7 +12,7 @@ const scoreTable = new ScoreTable();
 const eventManager = new EventManager();
 const gameManager = new GameManager();
 const soundManager = new SoundManager();
-let mapManager = new MapManager();
+const mapManager = new MapManager();
 const spriteManager = new SpriteManager();
 const physicManager = new PhysicManager();
 

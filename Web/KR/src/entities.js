@@ -12,6 +12,7 @@ class Entity {
     }
 }
 
+
 class Player extends Entity {
     constructor() {
         super();
@@ -22,9 +23,9 @@ class Player extends Entity {
         this.speed = 20;
         this.numbL = 0;
         this.numbR = 0;
-        this.left = ["rick_left1", "rick_left2", "rick_left3", "rick_left4"];
-        this.right = ["rick_right1", "rick_right4", "rick_right3", "rick_right2"];
-        this.position = "rick_right1";
+        this.left = "hero-left";
+        this.right = "hero-right";
+        this.position = "hero-right";
         this.jump = false;
         this.win = false;
     }
@@ -38,7 +39,7 @@ class Player extends Entity {
     }
 
     onTouchEntity(obj) {
-        if (obj.name.match(/coins[\d*]/)) {
+        if (obj.name.match(/plus[\d*]/)) {
             soundManager.play("/mus/aud1.wav", {looping: 0, volume: 0.5});
             this.countCoins += 1;
             let elem = document.getElementById('pCoins');
@@ -46,7 +47,7 @@ class Player extends Entity {
             obj.kill();
 
         }
-        if (obj.name.match(/kosm/)) {;
+        if (obj.name.match(/book/)) {;
             soundManager.stopAll();
             soundManager.init();
             soundManager.play("/mus/aud2.mp3", {looping: 0, volume: 1});
@@ -91,7 +92,8 @@ class Player extends Entity {
     }
 }
 
-class Enemy1 extends Entity {
+
+class Pacman extends Entity {
     constructor() {
         super();
         this.move_x = 3;
@@ -99,9 +101,9 @@ class Enemy1 extends Entity {
         this.speed = 10;
         this.goLeft = true;
         this.goIt = 0;
-        this.left = ["enemy1_left1", "enemy1_left2", "enemy1_left3", "enemy1_left4"];
-        this.right = ["enemy1_right1", "enemy1_right4", "enemy1_right3", "enemy1_right2"];
-        this.position = "enemy1_right1";
+        this.left = "pacman";
+        this.right = "pacman";
+        this.position = "pacman";
     }
 
     draw(ctx) {
@@ -113,7 +115,8 @@ class Enemy1 extends Entity {
     }
 }
 
-class Enemy2 extends Entity {
+
+class Minion extends Entity {
     constructor() {
         super();
         this.move_x = 3;
@@ -121,9 +124,9 @@ class Enemy2 extends Entity {
         this.speed = 10;
         this.goLeft = true;
         this.goIt = 0;
-        this.left = ["enemy2_left1", "enemy2_left2", "enemy2_left3", "enemy2_left4"];
-        this.right = ["enemy2_right1", "enemy2_right4", "enemy2_right3", "enemy2_right2"];
-        this.position = "enemy2_right1";
+        this.left = "minion";
+        this.right = "minion";
+        this.position = "minion";
     }
 
     draw(ctx) {
@@ -135,16 +138,13 @@ class Enemy2 extends Entity {
     }
 }
 
-class Rocket extends Entity {
+class Book extends Entity {
     constructor() {
         super();
-        this.move_x = 2;
-        this.move_y = 2;
-        this.speed = 10;
     }
 
     draw(ctx) {
-        spriteManager.drawSprite(ctx, "kosm", this.pos_x, this.pos_y - 150);
+        spriteManager.drawSprite(ctx, "book", this.pos_x, this.pos_y - 150);
     }
 
     update() {
@@ -158,8 +158,16 @@ class Rocket extends Entity {
     }
 }
 
-class Coins extends Entity {
+
+class Plus extends Entity {
     draw() {
-        spriteManager.drawSprite(ctx, "coins", this.pos_x, this.pos_y - 100);
+        spriteManager.drawSprite(ctx, "plus", this.pos_x, this.pos_y - 100);
+    }
+}
+
+
+class Plus extends Entity {
+    draw() {
+        spriteManager.drawSprite(ctx, "minus", this.pos_x, this.pos_y - 100);
     }
 }

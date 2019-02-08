@@ -25,7 +25,7 @@ class GameManager {
             if (this.levels.curr === this.levels.max) {
                 soundManager.stopAll();
                 soundManager.init();
-                soundManager.play("/mus/aud5.mp3", {looping: 0, volume: 0.5});
+                soundManager.play("/music/aud5.mp3", {looping: 0, volume: 0.5});
                 scoreTable.add(nickname, obj.countCoins);
                 elem.innerHTML = 'Ура! Кажется, у нас новый победитель!';
                 elem1.innerHTML = 'Круто, но я хочу пройти заново!';
@@ -97,13 +97,14 @@ class GameManager {
     loadAll() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         mapManager = new MapManager();
-        mapManager.loadMap(this.levels.curr + ".json");
+        mapManager.loadMap("maps/level" + this.levels.curr + ".json");
         spriteManager.loadAtlas("sprites.json", "spritesheet.png");
         this.factory['player'] = Player;
-        this.factory['coins'] = Coins;
-        this.factory['enemy1'] = Enemy1;
-        this.factory['enemy2'] = Enemy2;
-        this.factory['kosm'] = Rocket;
+        this.factory['book'] = Book;
+        this.factory['pacman'] = Pacman;
+        this.factory['minion'] = Minion;
+        this.factory['plus'] = Plus;
+        this.factory['minus'] = Minus;
         mapManager.parseEntities();
         mapManager.draw(ctx);
         eventManager.setup();
@@ -120,8 +121,8 @@ class GameManager {
             document.getElementById("myModal").style.display = "none";
 
             soundManager.init();
-            soundManager.loadArray(["/mus/aud1.wav","/mus/aud2.mp3", "/mus/aud3.mp3", "/mus/aud6.mp3", "/mus/aud5.mp3"]);
-            soundManager.play("/mus/aud6.mp3", {looping: 1, volume: 0.5});
+            soundManager.loadArray(["/music/aud1.wav","/music/aud2.mp3", "/music/aud3.mp3", "/music/aud6.mp3", "/music/aud5.mp3"]);
+            soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
             this.loadAll();
             updateWorld();
         }
@@ -131,6 +132,6 @@ class GameManager {
         this.levels.curr++;
         this.loadAll();
         updateWorld();
-        soundManager.play("/mus/aud6.mp3", {looping: 1, volume: 0.5});
+        soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
     }
 }
