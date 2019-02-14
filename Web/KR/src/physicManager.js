@@ -1,108 +1,132 @@
+const SPACE = 16;
+const JUMP = 8;
+const FALL = 25;
+
+
 class PhysicManager {
-    update(obj) {
-        if (obj.pos_y > 650 || obj.pos_y < 0) {
-            obj.kill();
+    // обработка движений игрока
+    updatePlayer(obj) {
+        // на месте
+        if (obj.move_x === 0 && obj.jump === false) {
+            // проверка на яму
+            let ts = mapManager.getTilesetIdx(obj.pos_x + obj.size_x / 2, obj.pos_y + obj.size_y + SPACE);
+            if (ts === 0) {
+                obj.pos_y += FALL
+            }
             return "stop";
         }
-        if (obj.move_x === 2 && obj.move_y === 2) {
-            return "stop";
-        }
-        if (obj.move_y === 4) {
-            obj.pos_y -= 30;
-            return "move";
-        }
-        if (obj.move_x === 3 && obj.move_y === 3) {
-            let i = obj.goIt;
-            let j = i;
-            if (i >= 4) j = i - 4;
-            if (obj.goLeft === true) {
-                obj.pos_x += 10;
-                obj.position = obj.right[j];
-                i++;
-                if (i === 8) {
-                    obj.goIt = 0;
-                    obj.goLeft = false;
-                } else obj.goIt = i;
-            } else {
-                obj.pos_x -= 10;
-                obj.position = obj.left[j];
-                i++;
-                if (i === 8) {
-                    obj.goIt = 0;
-                    obj.goLeft = true;
-                } else obj.goIt = i;
+
+        // движение влево / вправо / вверх
+        // новые координаты игрока
+        let newX = obj.pos_x + obj.move_x * obj.speed
+        let newY = obj.pos_y;
+        if (obj.jump === true) {
+            // проверка на прыжок из пустоты
+            let ts = mapManager.getTilesetIdx(obj.pos_x + obj.size_x / 2, obj.pos_y + obj.size_y + SPACE);
+            if (ts !== 0) {
+              newY -= JUMP * obj.speed;
             }
-            return "move";
+            obj.jump = false;
         }
-        let newX = undefined;
-        let newY = undefined;
-        if (obj.jump === true && obj.move_y === 0) {
-            newX = obj.pos_x;
-            newY = obj.pos_y + 50;
-            let ts = mapManager.getTilesetIdx(newX - 10 + obj.size_x / 2, newY + obj.size_y / 2);
-            if (ts !== 0 && obj.onTouchMap) {
-                obj.jump = false;
-                obj.onTouchMap(ts);
-            }
-            if (obj.jump === true) {
-                obj.pos_y += 10;
-            }
-        }
-        if (obj.move_x === 0 && obj.move_y === 0) {
-            newX = obj.pos_x;
-            newY = obj.pos_y + 50;
-            let ts = mapManager.getTilesetIdx(newX - 10 + obj.size_x / 2, newY + obj.size_y / 2);
-            if (ts !== 0 && obj.onTouchMap) {
+        // проверка на препятствие
+        for (let i = 0; i < Math.round(obj.size_y / mapManager.tSize.y); i++) {
+            let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, newY + (i + 0.5) * mapManager.tSize.y);
+            if (ts !== 0) {
                 return "stop";
             }
-            obj.pos_y += 10;
-            return "stop";
         }
-        if (obj.move_x !== 0 && obj.move_y === 0) {
-            newX = obj.pos_x + Math.floor(obj.move_x * obj.speed);
-            newY = obj.pos_y + 50;
-            let ts = mapManager.getTilesetIdx(newX - 10 + obj.size_x / 2, newY + obj.size_y / 2);
-            if (ts === 0 && obj.onTouchMap) {
-                obj.pos_y += 10;
-            }
+        // проверка на яму
+        let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, newY + obj.size_y + SPACE);
+        if (ts === 0) {
+            newY += FALL;
         }
-        if (obj.move_y !== 0) {
-            newX = obj.pos_x;
-            newY = obj.pos_y + 50;
-            let ts = mapManager.getTilesetIdx(obj.pos_x - 10 + obj.size_x / 2, newY + obj.size_y / 2);
-            if (ts === 0 && obj.onTouchMap) {
-                return;
-            }
-        }
-        if (obj.jump === true) {
-            newX = obj.pos_x + Math.floor(obj.move_x * obj.speed) + obj.move_x * 20;
-        } else {
-            newX = obj.pos_x + Math.floor(obj.move_x * obj.speed);
-        }
-        if (newX < 10) return "stop";
-        newY = obj.pos_y + Math.floor(obj.move_y * obj.speed);
-        let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, newY + obj.size_y / 2);
-        let e = this.entityAtXY(obj, newX, newY);
-        if (e !== null && obj.onTouchEntity) {
-            obj.onTouchEntity(e);
-        }
-        if (ts !== 0 && obj.onTouchMap) {
-            obj.jump = false;
-            obj.onTouchMap(ts);
-        }
-        if (ts === 0 && e === null) {
-            obj.pos_x = newX;
-            obj.pos_y = newY;
-        } else
-            return "break";
+
+
+        // let e = this.entityAtXY(obj, newX, newY);
+        // if (e !== null && obj.onTouchEntity) {
+        //     obj.onTouchEntity(e);
+        // }
+        // if (ts !== 0 && obj.onTouchMap) {
+        //     obj.jump = false;
+        //     obj.onTouchMap(ts);
+        // }
+        // if (ts === 0 && e === null) {
+        //     obj.pos_x = newX;
+        //     obj.pos_y = newY;
+        // }
+        // else
+        //     return "break";
+
+        obj.pos_x = newX;
+        obj.pos_y = newY;
         return "move";
     }
 
+
+    // обработка движений врагов
+    updateEnemy(obj) {
+        if (obj.steps == obj.distance) {
+            if (obj.move_x === 1) {
+                obj.position = obj.left;
+            }
+            else {
+                obj.position = obj.right;
+            }
+            obj.move_x *= -1;
+            obj.steps = 0;
+        }
+        let newX = obj.pos_x + obj.move_x * obj.speed;
+        // проверка на препятствие
+        for (let i = 0; i < Math.round(obj.size_y / mapManager.tSize.y); i++) {
+            let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, obj.pos_y + (i + 0.5) * mapManager.tSize.y);
+            if (ts !== 0) {
+                if (obj.move_x === 1) {
+                    obj.position = obj.left;
+                }
+                else {
+                    obj.position = obj.right;
+                }
+                obj.move_x *= -1;
+                obj.steps = 0;
+                return "stop";
+            }
+        }
+        obj.pos_x = newX;
+        obj.steps += 1;
+        return "move";
+    }
+
+
+    // обработка движений мячей
+    updateBall(obj) {
+        if (obj.steps == obj.distance) {
+            obj.kill(null);
+            return "stop";
+        }
+        let newX = obj.pos_x + obj.move_x * obj.speed;
+        // проверка на препятствие
+        let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, obj.pos_y + obj.size_y / 2);
+        if (ts !== 0) {
+            obj.kill(null);
+            return "stop";
+        }
+        // проверка на врага
+        let e = this.entityAtXY(obj, newX, obj.pos_y);
+        if (e !== null && (e.type === 'pacman' || e.type === 'minion')) {
+            obj.kill(e);
+        }
+        obj.pos_x = newX;
+        obj.steps += 1;
+        return "move";
+    }
+
+
+    // поиск объекта по координатам
     entityAtXY(obj, x, y) {
-        for(let i = 0; i < gameManager.entities.length; i++) {
+        for (let i = 0; i < gameManager.entities.length; i++) {
             let e = gameManager.entities[i];
-            if(e.name !== obj.name) {
-                if(x + obj.size_x < e.pos_x || y + obj.size_y < e.pos_y || x > e.pos_x + e.size_x  || y > e.pos_y + e.size_y)
+            if (e.type !== obj.type) {
+                if (x + obj.size_x < e.pos_x || y + obj.size_y < e.pos_y || x > e.pos_x + e.size_x  || y > e.pos_y + e.size_y)
                     continue;
                 return e;
             }

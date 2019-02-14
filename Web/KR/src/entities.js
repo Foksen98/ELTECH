@@ -4,12 +4,16 @@ class Entity {
         this.pos_y = 0;
         this.size_x = 0;
         this.size_y = 0;
-        this.touch = false;
+        this.position = "";
     }
 
-    kill() {
-        gameManager.kill(this);
+
+    draw(ctx) {
+        spriteManager.drawSprite(ctx, this.position, this.pos_x, this.pos_y);
     }
+
+
+    update() {}
 }
 
 
@@ -20,9 +24,7 @@ class Player extends Entity {
         this.countCoins = 0;
         this.move_x = 0;
         this.move_y = 0;
-        this.speed = 20;
-        this.numbL = 0;
-        this.numbR = 0;
+        this.speed = 25;
         this.left = "hero-left";
         this.right = "hero-right";
         this.position = "hero-right";
@@ -30,55 +32,27 @@ class Player extends Entity {
         this.win = false;
     }
 
-    draw(ctx) {
-        spriteManager.drawSprite(ctx, this.position, this.pos_x, this.pos_y - 70);
-    }
 
     update() {
-        physicManager.update(this);
+        physicManager.updatePlayer(this);
     }
 
-    onTouchEntity(obj) {
-        if (obj.name.match(/plus[\d*]/)) {
-            soundManager.play("/mus/aud1.wav", {looping: 0, volume: 0.5});
-            this.countCoins += 1;
-            let elem = document.getElementById('pCoins');
-            elem.innerHTML = this.countCoins;
-            obj.kill();
-
-        }
-        if (obj.name.match(/book/)) {;
-            soundManager.stopAll();
-            soundManager.init();
-            soundManager.play("/mus/aud2.mp3", {looping: 0, volume: 1});
-            obj.touch = true;
-            this.win = true;
-            obj.move_y = 4;
-            this.kill();
-        }
-        if (obj.name.match(/enemy[\d*]/)) {
-            this.kill();
-        }
-    }
-
-    onTouchMap(obj) {
-    };
-
+    // завершение игры
     kill() {
         window.cancelAnimationFrame(ANIM);
 
-        gameManager.entities = [];
-        gameManager.kill(this);
+        // gameManager.kill(this);
         if (!this.win) {
-            gameManager.kill(this, false);
+            gameManager.kill(this);
             soundManager.stopAll();
             soundManager.init();
-            soundManager.play("/mus/aud3.mp3", {looping: 0, volume: 0.5});
+            soundManager.play("/music/aud3.mp3", {looping: 0, volume: 0.5});
             elem.innerHTML = 'Вы отчислены!';
             elem1.innerHTML = 'Хочу учиться!';
             result.style.display = 'block';
-        } else {
-            gameManager.kill(this, true, this.countCoins);
+        }
+        else {
+            gameManager.kill(this, this.countCoins);
         }
 
         document.getElementById("records").innerHTML = scoreTable.get();
@@ -90,28 +64,87 @@ class Player extends Entity {
             elem.innerHTML = "";
         }
     }
+
+    // стрельба мячами
+    fire() {
+        // создание мяча
+        try {
+            let obj = new gameManager.factory['ball']();
+            obj.type = 'ball';
+            obj.pos_x = this.pos_x + this.size_x;
+            obj.pos_y = this.pos_y + this.size_y / 2;
+            obj.size_x = 50;
+            obj.size_y = 50;
+            if (this.position === 'hero-right') {
+                obj.move_x = 1;
+            }
+            else {
+                obj.move_x = -1;
+            }
+            gameManager.entities.push(obj);
+        }
+        catch (ex) {
+            console.log("" + e.gid + e.type + ex);
+        }
+    }
+
+
+    // касание врагов / плюсов / минусов
+    onTouchEntity(obj) {
+        // если коснулись врагов
+        if (obj.type === "pacman" || obj.type === "minion") {
+            this.kill();
+        }
+        // если коснулись плюса
+        if (obj.type === "plus") {
+            soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
+            this.countCoins += 1;
+            let elem = document.getElementById('pCoins');
+            elem.innerHTML = this.countCoins;
+            obj.kill();
+
+        }
+        // если коснулись минуса
+        if (obj.type === "minus") {
+            soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
+            this.countCoins -= 1;
+            let elem = document.getElementById('pCoins');
+            elem.innerHTML = this.countCoins;
+            obj.kill();
+
+        }
+        // если коснулись книги
+        if (obj.type === "book") {;
+            soundManager.stopAll();
+            soundManager.init();
+            soundManager.play("/music/aud2.mp3", {looping: 0, volume: 1});
+            this.win = true;
+            this.kill();
+        }
+    }
+
+
+    onTouchMap(obj) {
+        this.kill();
+    };
 }
 
 
 class Pacman extends Entity {
     constructor() {
         super();
-        this.move_x = 3;
-        this.move_y = 3;
-        this.speed = 10;
-        this.goLeft = true;
-        this.goIt = 0;
-        this.left = "pacman";
-        this.right = "pacman";
-        this.position = "pacman";
+        this.move_x = -1;
+        this.speed = 40;
+        this.distance = 20;
+        this.steps = 0;
+        this.position = "pacman-right";
+        this.left = "pacman-left";
+        this.right = "pacman-right";
     }
 
-    draw(ctx) {
-        spriteManager.drawSprite(ctx, this.position, this.pos_x, this.pos_y - 85);
-    }
 
     update() {
-        physicManager.update(this);
+        physicManager.updateEnemy(this);
     }
 }
 
@@ -119,55 +152,67 @@ class Pacman extends Entity {
 class Minion extends Entity {
     constructor() {
         super();
-        this.move_x = 3;
-        this.move_y = 3;
+        this.move_x = -1;
         this.speed = 10;
-        this.goLeft = true;
-        this.goIt = 0;
+        this.distance = 15;
+        this.steps = 0;
+        this.position = "minion";
         this.left = "minion";
         this.right = "minion";
-        this.position = "minion";
     }
 
-    draw(ctx) {
-        spriteManager.drawSprite(ctx, this.position, this.pos_x, this.pos_y - 100);
-    }
 
     update() {
-        physicManager.update(this);
+        physicManager.updateEnemy(this);
     }
 }
 
-class Book extends Entity {
+
+class Ball extends Entity {
     constructor() {
         super();
+        this.move_x = 0;
+        this.speed = 20;
+        this.distance = 15;
+        this.steps = 0;
+        this.position = "ball";
     }
 
-    draw(ctx) {
-        spriteManager.drawSprite(ctx, "book", this.pos_x, this.pos_y - 150);
-    }
 
     update() {
-        if (this.touch === true) {
-            physicManager.update(this);
-        }
+        physicManager.updateBall(this);
     }
 
-    kill() {
+
+    kill(obj) {
+        if (obj !== null) {
+            soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
+            gameManager.kill(obj);
+        }
         gameManager.kill(this);
     }
 }
 
 
-class Plus extends Entity {
-    draw() {
-        spriteManager.drawSprite(ctx, "plus", this.pos_x, this.pos_y - 100);
+class Book extends Entity {
+    constructor() {
+        super();
+        this.position = "book";
     }
 }
 
 
 class Plus extends Entity {
-    draw() {
-        spriteManager.drawSprite(ctx, "minus", this.pos_x, this.pos_y - 100);
+    constructor() {
+        super();
+        this.position = "plus";
+    }
+}
+
+
+class Minus extends Entity {
+    constructor() {
+        super();
+        this.position = "minus";
     }
 }

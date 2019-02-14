@@ -1,5 +1,5 @@
-const INITIAL_WIDTH = 1700;
-const INITIAL_HEIGHT = 850;
+const INITIAL_WIDTH = 1500;
+const INITIAL_HEIGHT = 750;
 
 class MapManager {
     constructor() {
@@ -16,6 +16,7 @@ class MapManager {
         this.view = {x: 0, y: 0, w: INITIAL_WIDTH, h: INITIAL_WIDTH}
     }
 
+
     loadMap(path) {
         const request = new XMLHttpRequest();
         request.overrideMimeType("application/json");
@@ -27,6 +28,7 @@ class MapManager {
         };
         request.send();
     }
+
 
     draw(ctx) {
         ctx.clearRect(0, 0, INITIAL_WIDTH, INITIAL_HEIGHT);
@@ -47,21 +49,18 @@ class MapManager {
                     if (this.tLayer[j].data[i] !== 0) {
                         let tile = this.getTile(this.tLayer[j].data[i]);
                         let pX = (i % this.xCount) * this.tSize.x;
-                        let pY = Math.floor(i / this.xCount) * this.tSize.x - 80;
+                        let pY = Math.floor(i / this.xCount) * this.tSize.x;
                         if (!this.isVisible(pX, pY, this.tSize.x, this.tSize.y))
                             continue;
                         pX -= this.view.x;
-                        pY -= this.view.y;
-                        if (tile.name === "t3") {
-                            ctx.drawImage(tile.img, pX, pY - 20, tile.tileW, tile.tileH);
-                        } else {
-                            ctx.drawImage(tile.img, pX, pY, tile.tileW, tile.tileH);
-                        }
+                        pY -= this.view.y
+                        ctx.drawImage(tile.img, pX, pY, tile.tileW, tile.tileH);
                     }
                 }
             }
         }
     }
+
 
     parseMap(tilesJSON) {
         this.mapData = JSON.parse(tilesJSON);
@@ -95,6 +94,7 @@ class MapManager {
         this.jsonLoaded = true;
     }
 
+
     getTile(tileIndex) {
         let tile = {
             img: null,
@@ -117,6 +117,7 @@ class MapManager {
         return tile;
     }
 
+
     getTileset(tileIndex) {
         for (let i = this.tilesets.length - 1; i >= 0; i--) {
             if (this.tilesets[i].firstgid <= tileIndex) {
@@ -126,9 +127,11 @@ class MapManager {
         return null;
     }
 
+
     isVisible(x, y, width, height) {
         return !(x + width < this.view.x || y + height < this.view.y || x > this.view.x + this.view.w || y > this.view.y + this.view.h);
     }
+
 
     parseEntities() {
         if (!this.imgLoaded || !this.jsonLoaded) {
@@ -143,27 +146,28 @@ class MapManager {
                         let e = entities.objects[i];
                         try {
                             let obj = new gameManager.factory[e.type]();
-                            obj.name = e.name;
+                            obj.type = e.type;
                             obj.pos_x = e.x;
                             obj.pos_y = e.y;
                             obj.size_x = e.width;
                             obj.size_y = e.height;
                             gameManager.entities.push(obj);
-                            if (obj.name === "player")
+                            if (obj.type === "player")
                                 gameManager.initPlayer(obj);
-                        } catch (ex) {
+                        }
+                        catch (ex) {
                             console.log("" + e.gid + e.type + ex);
                         }
                     }
                 }
     }
 
+
     getTilesetIdx(x, y) {
-        const wX = x;
-        const wY = y;
-        const idx = Math.floor(wY / this.tSize.y) * this.xCount + Math.floor(wX / this.tSize.x);
-        return this.tLayer[1].data[idx];
+        let idx = Math.floor(y / this.tSize.y) * this.xCount + Math.floor(x / this.tSize.x);
+        return this.tLayer[0].data[idx];
     }
+
 
     centerAt(x, y) {
         if (x < this.view.w / 2)
@@ -173,5 +177,4 @@ class MapManager {
         else
             this.view.x = x - (this.view.w / 2);
     }
-
 }

@@ -12,7 +12,7 @@ const scoreTable = new ScoreTable();
 const eventManager = new EventManager();
 const gameManager = new GameManager();
 const soundManager = new SoundManager();
-const mapManager = new MapManager();
+var mapManager = new MapManager();
 const spriteManager = new SpriteManager();
 const physicManager = new PhysicManager();
 

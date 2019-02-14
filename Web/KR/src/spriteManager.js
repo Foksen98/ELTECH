@@ -29,7 +29,7 @@ class SpriteManager {
         const atlas = JSON.parse(atlasJson);
         for(let name in atlas.frames) {
             const frame = atlas.frames[name].frame;
-            this.sprites.push({name:name,x:frame.x,y:frame.y,w:frame.w,h:frame.h});
+            this.sprites.push({name:name, x:frame.x, y:frame.y, w:frame.w, h:frame.h});
         }
         this.jsonLoaded = true;
     }
