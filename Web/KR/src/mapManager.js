@@ -1,5 +1,5 @@
-const INITIAL_WIDTH = 1500;
-const INITIAL_HEIGHT = 750;
+const INITIAL_WIDTH = 1600;
+const INITIAL_HEIGHT = 896;
 
 class MapManager {
     constructor() {
@@ -153,7 +153,7 @@ class MapManager {
                             obj.size_y = e.height;
                             gameManager.entities.push(obj);
                             if (obj.type === "player")
-                                gameManager.initPlayer(obj);
+                                gameManager.player = obj;
                         }
                         catch (ex) {
                             console.log("" + e.gid + e.type + ex);

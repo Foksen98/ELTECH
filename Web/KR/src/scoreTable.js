@@ -1,25 +1,40 @@
 class ScoreTable {
     constructor() {
-        this.table = JSON.parse(getItem('table')) || [];
+        this.records = JSON.parse(localStorage.getItem('univer.records')) || {};
     }
 
-    get() {
-        this.table.sort(function (a, b) {
-            return b[2] - a[2];
+    // Сохранение результата
+    store_record(username, score) {
+        if ((username in this.records) && (this.records[username] < score) || (!(username in this.records))) {
+            this.records[username] = score;
+            localStorage.setItem("univer.records", JSON.stringify(records));
+        }
+    }
+
+    // Сортировка результатов
+    sort_scores() {
+        let items = Object.keys(this.records).map(function(key) {
+            return [key, this.records[key]];
         });
 
-        let content = "";
-        for (let n = 0; n < this.table.length; n++) {
-            content += "<tr><td>" + this.table[n][0] + "</td>" + "<td>" + this.table[n][1] + "</td>" + "<td>" + this.table[n][2] + "</td></tr>";
-        }
-        return content;
+        // Сортируем по количеству очков
+        items.sort(function(first, second) {
+            return second[1] - first[1];
+        });
+
+        return items;
     }
 
-    add(name, data) {
-        const date = new Date();
-        const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-        this.table.push([time, name, data]);
-        setItem("table", JSON.stringify(this.table));
+    // Обновление таблицы с результатами
+    update_table() {
+        let scores = this.sort_scores();
+        let table_content = "";
+        scores.forEach(function(record) {
+            if (record[0] != 'undefined') {
+                table_content += `<tr> <td> ${record[1]} </td> <td> ${record[0]} </td> </tr>`;
+            }
+        });
+        document.getElementById("table_body").innerHTML = table_content;
     }
 
 

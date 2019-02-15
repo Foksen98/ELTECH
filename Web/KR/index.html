@@ -1,49 +1,87 @@
+<!DOCTYPE html>
 <html lang='ru'>
     <head>
        <meta charset='utf-8'>
-       <title>Супер-мега-платформер (нет)</title>
+       <title>Универ</title>
        <link rel='stylesheet' href='style.css'>
     </head>
     <body>
-        <div id='myModal' class='modal'>
-            <div class='modal-content'>
-                <h2>Добро пожаловать в Супер-мега-платформер!</h2>
-                <h3>Вводи имя и начинай играть!</h3>
-                <input type='text' name='nickname' placeholder='Как тебя зовут?' id='nick' size='20'/>
-                <br>
-                <a onclick='gameManager.play()' class='button' id='start'>Играть</a>
+        <div class = "container">
+            <!-- Заголовок -->
+            <h1 class = "header_text">
+                Игра&nbsp
+                <span style = "color: red"> У </span>
+                <span style = "color: orange"> н </span>
+                <span style = "color: yellow"> и </span>
+                <span style = "color: green"> в </span>
+                <span style = "color: blue"> е </span>
+                <span style = "color: violet"> р </span>
+            </h1>
+            <!-- Блок с игрой -->
+            <div id = "game">
+                <div id = "board_block">
+                    <canvas id = "board" width = "1600" height = "896"> </canvas>
+                </div>
+                <div id = "info_block">
+                    <h3> Студент: <span id = "username"> </span> </h3>
+                    <h3> Количество очков: <span id = "score"> </span> </h3>
+                    <h3> Курс: <span id = "level"> </span> </h3>
+                </div>
             </div>
-        </div>
-
-        <canvas id='canvasId' width='1500' height='750'></canvas>
-
-        <div id='coins'>
-            <p>Набрано биткоинов: <b id='pCoins'></b></p>
-            <p>Ваш уровень, сэр: <b id='total'></b></p>
-        </div>
-        <div id='result'>
-            <h2 id='hBody'></h2>
-            <a id='aResult' href='/index.html'></a>
-        </div>
-
-        <div id='scoretable'>
-            <h2>Рекордсмены Супер-мега-платформера</h2>
-            <h3>Ты можешь быть в их числе!</h3>
-            <table>
-                <colgroup>
-                    <col width='30%'>
-                    <col width='40%'>
-                    <col width='30%'>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>Время</th>
-                        <th>Имя</th>
-                        <th>Количество биткоинов</th>
-                    </tr>
-                </thead>
-                <tbody id='records'></tbody>
-            </table>
+            <!-- Левая колонка -->
+            <div id = "left_column">
+                <!-- Таблица результатов -->
+                <h2 class = "header_text"> Выпускники </h2>
+                <table id = "scoretable">
+                    <thead>
+                        <tr>
+                            <th> Студент </th>
+                            <th> Очки </th>
+                        </tr>
+                    </thead>
+                    <tbody id = "table_body"> </tbody>
+                </table>
+                <!-- Подпись -->
+                <div class = "author"> by <b> Konstantin Fokin </b> [foksen98@mail.ru] </div>
+            </div>
+            <!-- Правая колонка -->
+            <div id = "right_column">
+                <!-- Блок с логином -->
+                <div id = "login">
+                    <form id = "login_form" action = "index.html">
+                        <label>
+                            <h3 class = "header_text"> Введите номер зачётки: </h3>
+                            <br />
+                            <input id = "login_username" type = "text" placeholder = "Номер зачётки" required>
+                        </label>
+                        <br />
+                        <input class = "btn" type = "submit" value = "Играть!">
+                    </form>
+                    <br />
+                    <div class = "rules_block">
+                        <h1 class = "text_centered"> Правила игры: </h1>
+                        <div class "row">
+                            <div class = "left_half_column">
+                                <h3 class = "text_centered"> Клавиши для управления: </h3>
+                                <ul>
+                                    <li> <em> <b> Стрелка влево </b> </em> - шаг влево </li>
+                                    <li> <em> <b> Стрелка вправо </b> </em> - шаг вправо </li>
+                                    <li> <em> <b> Стрелка вверх </b> </em> - прыжок вверх </li>
+                                    <li> <em> <b> Пробел </b> </em> - выстрел </li>
+                                </ul>
+                            </div>
+                            <div class = "right_half_column"> </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Блок с результатом игры -->
+                <div id = "game_over">
+                    <h1 class = "text_centered"> Игра окончена! </h1>
+                    <h2 class = "text_centered"> Вы набрали <b> <span id = "current_result"> </span> </b> очков </h2>
+                    <br />
+                    <div id = "new_game" class = "btn"> Новая игра </div>
+                </div>
+            </div>
         </div>
 
         <script src='src/gameManager.js'></script>

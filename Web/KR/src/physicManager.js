@@ -1,5 +1,5 @@
 const SPACE = 16;
-const JUMP = 8;
+const JUMP = 10;
 const FALL = 25;
 
 
@@ -40,22 +40,11 @@ class PhysicManager {
         if (ts === 0) {
             newY += FALL;
         }
-
-
-        // let e = this.entityAtXY(obj, newX, newY);
-        // if (e !== null && obj.onTouchEntity) {
-        //     obj.onTouchEntity(e);
-        // }
-        // if (ts !== 0 && obj.onTouchMap) {
-        //     obj.jump = false;
-        //     obj.onTouchMap(ts);
-        // }
-        // if (ts === 0 && e === null) {
-        //     obj.pos_x = newX;
-        //     obj.pos_y = newY;
-        // }
-        // else
-        //     return "break";
+        // проверка на врага
+        let e = this.entityAtXY(obj, newX, obj.pos_y);
+        if (e !== null) {
+            obj.onTouchEntity(e);
+        }
 
         obj.pos_x = newX;
         obj.pos_y = newY;
@@ -91,6 +80,7 @@ class PhysicManager {
                 return "stop";
             }
         }
+
         obj.pos_x = newX;
         obj.steps += 1;
         return "move";
@@ -115,6 +105,7 @@ class PhysicManager {
         if (e !== null && (e.type === 'pacman' || e.type === 'minion')) {
             obj.kill(e);
         }
+
         obj.pos_x = newX;
         obj.steps += 1;
         return "move";

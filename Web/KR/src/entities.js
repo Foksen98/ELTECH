@@ -21,7 +21,7 @@ class Player extends Entity {
     constructor() {
         super();
         this.nickname = "";
-        this.countCoins = 0;
+        this.score = 0;
         this.move_x = 0;
         this.move_y = 0;
         this.speed = 25;
@@ -40,29 +40,7 @@ class Player extends Entity {
     // завершение игры
     kill() {
         window.cancelAnimationFrame(ANIM);
-
-        // gameManager.kill(this);
-        if (!this.win) {
-            gameManager.kill(this);
-            soundManager.stopAll();
-            soundManager.init();
-            soundManager.play("/music/aud3.mp3", {looping: 0, volume: 0.5});
-            elem.innerHTML = 'Вы отчислены!';
-            elem1.innerHTML = 'Хочу учиться!';
-            result.style.display = 'block';
-        }
-        else {
-            gameManager.kill(this, this.countCoins);
-        }
-
-        document.getElementById("records").innerHTML = scoreTable.get();
-
-        elem1.onclick = function () {
-            gameManager.play();
-
-            this.innerHTML = "";
-            elem.innerHTML = "";
-        }
+        gameManager.kill(this);
     }
 
     // стрельба мячами
@@ -99,18 +77,18 @@ class Player extends Entity {
         if (obj.type === "plus") {
             soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
             this.countCoins += 1;
-            let elem = document.getElementById('pCoins');
+            let elem = document.getElementById('score');
             elem.innerHTML = this.countCoins;
-            obj.kill();
+            gameManager.kill(obj);
 
         }
         // если коснулись минуса
         if (obj.type === "minus") {
             soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
             this.countCoins -= 1;
-            let elem = document.getElementById('pCoins');
+            let elem = document.getElementById('score');
             elem.innerHTML = this.countCoins;
-            obj.kill();
+            gameManager.kill(obj);
 
         }
         // если коснулись книги
@@ -123,7 +101,7 @@ class Player extends Entity {
         }
     }
 
-
+    // падение в яму
     onTouchMap(obj) {
         this.kill();
     };

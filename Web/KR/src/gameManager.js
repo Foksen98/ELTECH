@@ -2,43 +2,38 @@ class GameManager {
     constructor() {
         this.factory = {};
         this.entities = [];
-        this.coinsNum = 0;
-        this.totalScore = 0;
         this.player = null;
         this.levels = {curr: 1, max: 3};
-        this.nickname = "";
         this.laterKill = [];
     }
 
-
-    initPlayer(obj) {
-        this.player = obj;
-    }
-
     // убийство любого персонажа
-    kill(obj, count) {
+    kill(obj) {
         // убить не игрока
-        if (obj.type !== "player") {
-            this.laterKill.push(obj);
-        }
-        // если игрок победил / перешел на новый уровень
-        if (obj.win) {
-            this.totalScore += count;
-            document.getElementById("total").innerHTML = gameManager.totalScore;
-            // победа
-            if (this.levels.curr === this.levels.max) {
+        if (obj.type === "player") {
+            // если игрок победил / перешел на новый уровень
+            if (obj.win) {
+                // победа
+                if (this.levels.curr === this.levels.max) {
+                    soundManager.stopAll();
+                    soundManager.init();
+                    soundManager.play("/music/aud5.mp3", {looping: 0, volume: 0.5});
+                    win_game(obj.score);
+                }
+                // новый уровень
+                else {
+                    this.levelUp();
+                }
+            }
+            else {
                 soundManager.stopAll();
                 soundManager.init();
-                soundManager.play("/music/aud5.mp3", {looping: 0, volume: 0.5});
-                scoreTable.add(nickname, obj.countCoins);
-                elem.innerHTML = 'Поздравляю! Вы закончили уливерситет!';
-                elem1.innerHTML = 'Поступить снова на 1 курс!';
-                result.style.display = 'block';
+                soundManager.play("/music/aud3.mp3", {looping: 0, volume: 0.5});
+                lose_game(obj.score);
             }
-            // новый уровень
-            else {
-                this.levelUp();
-            }
+        }
+        else {
+            this.laterKill.push(obj);
         }
     }
 
@@ -102,7 +97,7 @@ class GameManager {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         mapManager = new MapManager();
         mapManager.loadMap("maps/level" + this.levels.curr + ".json");
-        spriteManager.loadAtlas("sprites.json", "spritesheet.png");
+        spriteManager.loadAtlas("sprites/sprites.json", "sprites/spritesheet.png");
         this.factory['player'] = Player;
         this.factory['book'] = Book;
         this.factory['pacman'] = Pacman;
@@ -113,30 +108,26 @@ class GameManager {
         mapManager.parseEntities();
         mapManager.draw(ctx);
         eventManager.setup();
-        document.getElementById("pCoins").innerHTML = this.totalScore < 0 ? "0" : this.totalScore;
-        document.getElementById("total").innerHTML = this.levels.curr;
+        score_element.innerHTML = this.player === null ? 0 : this.player.score;
+        level_element.innerHTML = this.levels.curr;
     }
 
     // начало игры
     play() {
-        this.levels.curr = 1;
-        this.totalScore = 0;
-        nickname = document.getElementById("nick").value;
-
-        if(nickname.length > 0){
-            document.getElementById("myModal").style.display = "none";
-
-            soundManager.init();
-            soundManager.loadArray(["/music/aud1.wav","/music/aud2.mp3", "/music/aud3.mp3", "/music/aud6.mp3", "/music/aud5.mp3"]);
-            soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
-            this.loadAll();
-            updateWorld();
-        }
+        soundManager.init();
+        soundManager.loadArray(["/music/aud1.wav","/music/aud2.mp3", "/music/aud3.mp3", "/music/aud6.mp3", "/music/aud5.mp3"]);
+        soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
+        this.loadAll();
+        updateWorld();
     }
 
     // переход на новый уровень
     levelUp() {
+        this.factory = {};
+        this.entities = [];
+        this.player = null;
         this.levels.curr++;
+        this.laterKill = [];
         this.loadAll();
         updateWorld();
         soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
