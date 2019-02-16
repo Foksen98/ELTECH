@@ -7,14 +7,15 @@ class ScoreTable {
     store_record(username, score) {
         if ((username in this.records) && (this.records[username] < score) || (!(username in this.records))) {
             this.records[username] = score;
-            localStorage.setItem("univer.records", JSON.stringify(records));
+            localStorage.setItem("univer.records", JSON.stringify(this.records));
         }
     }
 
     // Сортировка результатов
     sort_scores() {
-        let items = Object.keys(this.records).map(function(key) {
-            return [key, this.records[key]];
+        let records = this.records
+        let items = Object.keys(records).map(function(key) {
+            return [key, records[key]];
         });
 
         // Сортируем по количеству очков
@@ -31,7 +32,7 @@ class ScoreTable {
         let table_content = "";
         scores.forEach(function(record) {
             if (record[0] != 'undefined') {
-                table_content += `<tr> <td> ${record[1]} </td> <td> ${record[0]} </td> </tr>`;
+                table_content += `<tr> <td> ${record[0]} </td> <td> ${record[1]} </td> </tr>`;
             }
         });
         document.getElementById("table_body").innerHTML = table_content;

@@ -29,7 +29,7 @@ class GameManager {
                 soundManager.stopAll();
                 soundManager.init();
                 soundManager.play("/music/aud3.mp3", {looping: 0, volume: 0.5});
-                lose_game(obj.score);
+                lose_game(this.levels.curr, obj.score);
             }
         }
         else {
