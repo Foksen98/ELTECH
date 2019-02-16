@@ -20,7 +20,6 @@ class Entity {
 class Player extends Entity {
     constructor() {
         super();
-        this.nickname = "";
         this.score = 0;
         this.move_x = 0;
         this.move_y = 0;
@@ -49,15 +48,16 @@ class Player extends Entity {
         try {
             let obj = new gameManager.factory['ball']();
             obj.type = 'ball';
-            obj.pos_x = this.pos_x + this.size_x;
             obj.pos_y = this.pos_y + this.size_y / 2;
             obj.size_x = 50;
             obj.size_y = 50;
             if (this.position === 'hero-right') {
                 obj.move_x = 1;
+                obj.pos_x = this.pos_x + this.size_x;
             }
             else {
                 obj.move_x = -1;
+                obj.pos_x = this.pos_x;
             }
             gameManager.entities.push(obj);
         }
@@ -76,18 +76,16 @@ class Player extends Entity {
         // если коснулись плюса
         if (obj.type === "plus") {
             soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
-            this.countCoins += 1;
-            let elem = document.getElementById('score');
-            elem.innerHTML = this.countCoins;
+            this.score += 2;
+            score_element.innerHTML = this.score;
             gameManager.kill(obj);
 
         }
         // если коснулись минуса
         if (obj.type === "minus") {
             soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
-            this.countCoins -= 1;
-            let elem = document.getElementById('score');
-            elem.innerHTML = this.countCoins;
+            this.score -= 1;
+            score_element.innerHTML = this.score;
             gameManager.kill(obj);
 
         }

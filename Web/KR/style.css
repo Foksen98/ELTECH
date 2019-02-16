@@ -85,37 +85,38 @@ input {
     margin-top: 10%;
 }
 
-#game {
-    display: none;
-}
-
-#game_over {
-    display: none;
-}
-
 #login_form {
     text-align: center;
 }
 
-/* Блоки игры */
-#info_block {
-    float: right;
+
+#game_over {
+    display: none;
+    margin-top: 10%;
+    text-align: center;
 }
 
-#board_block {
-    transform: scale(0.9, 0.75);
-    margin-top: -7.5%;
+/* Блоки игры */
+#game {
+    display: none;
+}
+
+#info {
+    position: absolute;
+    left: 6.5%;
+    top: 14.5%;
+    width: 20%;
+    background-color: #ffffff;
+    border: 5px solid #000000;
 }
 
 #board {
+    display: block;
+    margin-top: -7.5%;
+    transform: scale(0.9, 0.75);
     background-image: url(background.jpg);
     background-repeat: no-repeat;
     background-position: center center;
-}
-
-#game_over {
-    margin-top: 10%;
-    text-align: center;
 }
 
 .text_centered {
@@ -125,7 +126,6 @@ input {
 /* Заголовок */
 .header_text {
     text-align: center;
-    /* margin-top: 0vh; */
 }
 
 /* Подпись */

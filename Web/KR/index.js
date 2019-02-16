@@ -52,7 +52,7 @@ document.getElementById('new_game').addEventListener('click', function(event) {
 // Конец игры (поражение)
 function lose_game(level, score) {
     hide_element(game_element);
-    congratulations.innerText = "К сожалению вас отчислили с " + level + " курса";
+    congratulations.innerText = "К сожалению, вас отчислили с " + level + " курса. :(";
     result_element.innerText = "Ваши очки: " + score;
     show_element(game_over_element);
     show_element(left_column_element);

@@ -2,6 +2,7 @@ class GameManager {
     constructor() {
         this.factory = {};
         this.entities = [];
+        this.totalScore = 0;
         this.player = null;
         this.levels = {curr: 1, max: 3};
         this.laterKill = [];
@@ -18,7 +19,7 @@ class GameManager {
                     soundManager.stopAll();
                     soundManager.init();
                     soundManager.play("/music/aud5.mp3", {looping: 0, volume: 0.5});
-                    win_game(obj.score);
+                    win_game(this.totalScore + obj.score);
                 }
                 // новый уровень
                 else {
@@ -29,7 +30,7 @@ class GameManager {
                 soundManager.stopAll();
                 soundManager.init();
                 soundManager.play("/music/aud3.mp3", {looping: 0, volume: 0.5});
-                lose_game(this.levels.curr, obj.score);
+                lose_game(this.levels.curr, this.totalScore + obj.score);
             }
         }
         else {
@@ -126,6 +127,7 @@ class GameManager {
         this.factory = {};
         this.entities = [];
         this.player = null;
+        this.totalScore += this.player.score;
         this.levels.curr++;
         this.laterKill = [];
         this.loadAll();

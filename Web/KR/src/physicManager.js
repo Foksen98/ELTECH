@@ -8,6 +8,9 @@ class PhysicManager {
     updatePlayer(obj) {
         // на месте
         if (obj.move_x === 0 && obj.jump === false) {
+            if (obj.pos_y + obj.size_y + FALL > mapManager.mapSize.y) {
+                obj.onTouchMap();
+            }
             // проверка на врага
             let e = this.entityAtXY(obj, obj.pos_x, obj.pos_y);
             if (e !== null) {
@@ -37,7 +40,7 @@ class PhysicManager {
         if (newX < 0 || newX + obj.size_x > mapManager.mapSize.x || newY < 0) {
             return "stop";
         }
-        if (newY > mapManager.mapSize.y) {
+        if (newY + obj.size_y + FALL > mapManager.mapSize.y) {
             obj.onTouchMap();
         }
         // проверка на препятствие

@@ -69,7 +69,7 @@ class MapManager {
         this.tSize.x = this.mapData.tilewidth;
         this.tSize.y = this.mapData.tileheight;
         this.mapSize.x = this.xCount * this.tSize.x;
-        this.mapSize.y = this.xCount * this.tSize.y;
+        this.mapSize.y = this.yCount * this.tSize.y;
         for (let i = 0; i < this.mapData.tilesets.length; i++) {
             let img = new Image();
             img.onload = () => {
