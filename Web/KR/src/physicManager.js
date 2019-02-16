@@ -8,6 +8,11 @@ class PhysicManager {
     updatePlayer(obj) {
         // на месте
         if (obj.move_x === 0 && obj.jump === false) {
+            // проверка на врага
+            let e = this.entityAtXY(obj, obj.pos_x, obj.pos_y);
+            if (e !== null) {
+                obj.onTouchEntity(e);
+            }
             // проверка на яму
             let ts = mapManager.getTilesetIdx(obj.pos_x + obj.size_x / 2, obj.pos_y + obj.size_y + SPACE);
             if (ts === 0) {
@@ -28,9 +33,16 @@ class PhysicManager {
             }
             obj.jump = false;
         }
+        // проверка на границы карты
+        if (newX < 0 || newX + obj.size_x > mapManager.mapSize.x || newY < 0) {
+            return "stop";
+        }
+        if (newY > mapManager.mapSize.y) {
+            obj.onTouchMap();
+        }
         // проверка на препятствие
         for (let i = 0; i < Math.round(obj.size_y / mapManager.tSize.y); i++) {
-            let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, newY + (i + 0.5) * mapManager.tSize.y);
+            let ts = mapManager.getTilesetIdx(newX + (obj.move_x + 1) * obj.size_x / 2, newY + (i + 0.5) * mapManager.tSize.y);
             if (ts !== 0) {
                 return "stop";
             }
@@ -67,7 +79,7 @@ class PhysicManager {
         let newX = obj.pos_x + obj.move_x * obj.speed;
         // проверка на препятствие
         for (let i = 0; i < Math.round(obj.size_y / mapManager.tSize.y); i++) {
-            let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, obj.pos_y + (i + 0.5) * mapManager.tSize.y);
+            let ts = mapManager.getTilesetIdx(newX + (obj.move_x + 1) * obj.size_x / 2, obj.pos_y + (i + 0.5) * mapManager.tSize.y);
             if (ts !== 0) {
                 if (obj.move_x === 1) {
                     obj.position = obj.left;
@@ -95,7 +107,7 @@ class PhysicManager {
         }
         let newX = obj.pos_x + obj.move_x * obj.speed;
         // проверка на препятствие
-        let ts = mapManager.getTilesetIdx(newX + obj.size_x / 2, obj.pos_y + obj.size_y / 2);
+        let ts = mapManager.getTilesetIdx(newX + (obj.move_x + 1) * obj.size_x / 2, obj.pos_y + obj.size_y / 2);
         if (ts !== 0) {
             obj.kill(null);
             return "stop";
@@ -117,8 +129,9 @@ class PhysicManager {
         for (let i = 0; i < gameManager.entities.length; i++) {
             let e = gameManager.entities[i];
             if (e.type !== obj.type) {
-                if (x + obj.size_x < e.pos_x || y + obj.size_y < e.pos_y || x > e.pos_x + e.size_x  || y > e.pos_y + e.size_y)
+                if ((x + obj.size_x < e.pos_x || x > e.pos_x + e.size_x) || (y + obj.size_y < e.pos_y || y > e.pos_y + e.size_y)) {
                     continue;
+                }
                 return e;
             }
         }

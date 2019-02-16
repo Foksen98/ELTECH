@@ -10,7 +10,7 @@ const congratulations_element = document.getElementById("congratulations");
 // блоки
 const game_element = document.getElementById("game");
 const left_column_element = document.getElementById("left_column");
-const righ_column_element = document.getElementById("right_column");
+const right_column_element = document.getElementById("right_column");
 const login_element = document.getElementById("login");
 const game_over_element = document.getElementById("game_over");
 
@@ -36,7 +36,7 @@ document.getElementById('login_form').addEventListener('submit', function(event)
     store_username(login_username_element.value);
     hide_element(login_element);
     hide_element(left_column_element);
-    hide_element(left_column_element);
+    hide_element(right_column_element);
     show_element(game_element);
     username_element.innerText = read_username();
     gameManager.play();

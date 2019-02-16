@@ -103,7 +103,7 @@ input {
 }
 
 #board_block {
-    transform: scale(0.9, 0.8);
+    transform: scale(0.9, 0.75);
     margin-top: -7.5%;
 }
 
