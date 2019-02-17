@@ -14,6 +14,7 @@ class GameManager {
         // убить не игрока
         if (obj.type === "player") {
             soundManager.stopAll();
+            soundManager.init();
             // если игрок победил / перешел на новый уровень
             if (obj.win) {
                 // победа
@@ -130,6 +131,7 @@ class GameManager {
         this.levels.curr++;
         this.laterKill = [];
         this.loadAll();
+        soundManager.play("/music/main.mp3", {looping: 1, volume: 0.5});
         updateWorld();
     }
 }

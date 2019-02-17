@@ -50,7 +50,6 @@ document.getElementById('new_game').addEventListener('click', function(event) {
 
 // Конец игры (поражение)
 function lose_game(level, score) {
-    soundManager.init();
     soundManager.play("/music/lose.mp3", {looping: 0, volume: 1});
     hide_element(game_element);
     congratulations.innerText = "К сожалению, вас отчислили с " + level + " курса. :(";
@@ -62,7 +61,6 @@ function lose_game(level, score) {
 
 // Конец игры (победа)
 function win_game(score) {
-    soundManager.init();
     soundManager.play("/music/win.mp3", {looping: 0, volume: 1});
     hide_element(game_element);
     congratulations.innerText = "Поздравляю! Вы окончили университет!";
