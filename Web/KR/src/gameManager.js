@@ -4,6 +4,7 @@ class GameManager {
         this.entities = [];
         this.totalScore = 0;
         this.player = null;
+        this.end = false;
         this.levels = {curr: 1, max: 3};
         this.laterKill = [];
     }
@@ -12,14 +13,13 @@ class GameManager {
     kill(obj) {
         // убить не игрока
         if (obj.type === "player") {
+            soundManager.stopAll();
             // если игрок победил / перешел на новый уровень
             if (obj.win) {
                 // победа
                 if (this.levels.curr === this.levels.max) {
-                    soundManager.stopAll();
-                    soundManager.init();
-                    soundManager.play("/music/aud5.mp3", {looping: 0, volume: 0.5});
                     win_game(this.totalScore + obj.score);
+                    this.end = true;
                 }
                 // новый уровень
                 else {
@@ -27,10 +27,8 @@ class GameManager {
                 }
             }
             else {
-                soundManager.stopAll();
-                soundManager.init();
-                soundManager.play("/music/aud3.mp3", {looping: 0, volume: 0.5});
                 lose_game(this.levels.curr, this.totalScore + obj.score);
+                this.end = true;
             }
         }
         else {
@@ -116,22 +114,22 @@ class GameManager {
     // начало игры
     play() {
         soundManager.init();
-        soundManager.loadArray(["/music/aud1.wav","/music/aud2.mp3", "/music/aud3.mp3", "/music/aud6.mp3", "/music/aud5.mp3"]);
-        soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
+        soundManager.loadArray(["/music/main.mp3","/music/win.mp3", "/music/lose.mp3", "/music/kill_enemy.mp3", "/music/new_level.mp3", "/music/plus.wav"]);
+        soundManager.play("/music/main.mp3", {looping: 1, volume: 0.5});
         this.loadAll();
         updateWorld();
     }
 
     // переход на новый уровень
     levelUp() {
+        soundManager.play("/music/new_level.mp3", {looping: 0, volume: 1});
         this.factory = {};
         this.entities = [];
-        this.player = null;
         this.totalScore += this.player.score;
+        this.player = null;
         this.levels.curr++;
         this.laterKill = [];
         this.loadAll();
         updateWorld();
-        soundManager.play("/music/aud6.mp3", {looping: 1, volume: 0.5});
     }
 }

@@ -75,7 +75,7 @@ class Player extends Entity {
         }
         // если коснулись плюса
         if (obj.type === "plus") {
-            soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
+            soundManager.play("/music/plus.wav", {looping: 0, volume: 0.5});
             this.score += 2;
             score_element.innerHTML = this.score;
             gameManager.kill(obj);
@@ -83,17 +83,14 @@ class Player extends Entity {
         }
         // если коснулись минуса
         if (obj.type === "minus") {
-            soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
+            soundManager.play("/music/plus.wav", {looping: 0, volume: 0.5});
             this.score -= 1;
             score_element.innerHTML = this.score;
             gameManager.kill(obj);
 
         }
         // если коснулись книги
-        if (obj.type === "book") {;
-            soundManager.stopAll();
-            soundManager.init();
-            soundManager.play("/music/aud2.mp3", {looping: 0, volume: 1});
+        if (obj.type === "book") {
             this.win = true;
             this.kill();
         }
@@ -162,7 +159,7 @@ class Ball extends Entity {
 
     kill(obj) {
         if (obj !== null) {
-            soundManager.play("/music/aud1.wav", {looping: 0, volume: 0.5});
+            soundManager.play("/music/kill_enemy.mp3", {looping: 0, volume: 0.5});
             gameManager.kill(obj);
         }
         gameManager.kill(this);

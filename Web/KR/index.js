@@ -22,7 +22,6 @@ var eventManager = new EventManager();
 var scoreTable = new ScoreTable();
 var soundManager = new SoundManager();
 var ANIM;
-var step = 1 / 20, counter = 0, dt = 0, now, last = timestamp();
 // ******************************************
 window.onload = function () {
     show_element(login_element);
@@ -51,6 +50,8 @@ document.getElementById('new_game').addEventListener('click', function(event) {
 
 // Конец игры (поражение)
 function lose_game(level, score) {
+    soundManager.init();
+    soundManager.play("/music/lose.mp3", {looping: 0, volume: 1});
     hide_element(game_element);
     congratulations.innerText = "К сожалению, вас отчислили с " + level + " курса. :(";
     result_element.innerText = "Ваши очки: " + score;
@@ -61,6 +62,8 @@ function lose_game(level, score) {
 
 // Конец игры (победа)
 function win_game(score) {
+    soundManager.init();
+    soundManager.play("/music/win.mp3", {looping: 0, volume: 1});
     hide_element(game_element);
     congratulations.innerText = "Поздравляю! Вы окончили университет!";
     result_element.innerText = "Ваши очки: " + score;
@@ -69,6 +72,16 @@ function win_game(score) {
     show_element(game_over_element);
     show_element(left_column_element);
     show_element(right_column_element);
+}
+
+//
+function updateWorld() {
+    if (!gameManager.end) {
+        setTimeout(() => {
+            gameManager.update();
+            ANIM = requestAnimationFrame(updateWorld, canvas);
+        }, 30);
+    }
 }
 // -----------------------------------------------------------------------------
 // Скрыть элемент
