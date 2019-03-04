@@ -1,0 +1,28 @@
+<!-- навбар -->
+<header>
+  <div class="w3-display-container">
+    <nav>
+      <div class="w3-bar w3-border w3-light-blue w3-xlarge">
+        <div class="container">
+          <a class="w3-bar-item w3-button w3-hover-blue-grey" routerLinkActive="w3-blue-grey" routerLink="/settings">
+            Настройки биржи
+          </a>
+          <a class="w3-bar-item w3-button w3-hover-blue-grey" routerLinkActive="w3-blue-grey" routerLink="/brokers">
+            Список брокеров
+          </a>
+          <a class="w3-bar-item w3-button w3-hover-blue-grey" routerLinkActive="w3-blue-grey" routerLink="/stocks">
+            Список акций
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div style="text-align:center">
+  <h1>
+    {{ title }}
+  </h1>
+</div>
+
+<router-outlet></router-outlet>

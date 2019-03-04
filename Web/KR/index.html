@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang='ru'>
+    <head>
+       <meta charset='utf-8'>
+       <title>Универ</title>
+       <link rel='stylesheet' href='style.css'>
+    </head>
+    <body>
+        <div class = "container">
+            <!-- Заголовок -->
+            <h1 class = "header_text">
+                Игра&nbsp
+                <span style = "color: red"> У </span>
+                <span style = "color: orange"> н </span>
+                <span style = "color: yellow"> и </span>
+                <span style = "color: green"> в </span>
+                <span style = "color: blue"> е </span>
+                <span style = "color: violet"> р </span>
+            </h1>
+            <!-- Блок с игрой -->
+            <div id = "game">
+                <canvas id = "board" width = "1600" height = "896"> </canvas>
+                <div id = "info">
+                    <h3> Студент: <span id = "username"> </span> </h3>
+                    <h3> Количество очков: <span id = "score"> </span> </h3>
+                    <h3> Курс: <span id = "level"> </span> </h3>
+                </div>
+            </div>
+            <!-- Левая колонка -->
+            <div id = "left_column">
+                <!-- Таблица результатов -->
+                <h2 class = "header_text"> Выпускники </h2>
+                <table id = "scoretable">
+                    <thead>
+                        <tr>
+                            <th> Студент </th>
+                            <th> Очки </th>
+                        </tr>
+                    </thead>
+                    <tbody id = "table_body"> </tbody>
+                </table>
+                <!-- Подпись -->
+                <div class = "author"> by <b> Konstantin Fokin </b> [foksen98@mail.ru] </div>
+            </div>
+            <!-- Правая колонка -->
+            <div id = "right_column">
+                <!-- Блок с логином -->
+                <div id = "login">
+                    <form id = "login_form" action = "index.html">
+                        <label>
+                            <h3 class = "header_text"> Введите номер зачётки: </h3>
+                            <br />
+                            <input id = "login_username" type = "text" placeholder = "Номер зачётки" required>
+                        </label>
+                        <br />
+                        <input class = "btn" type = "submit" value = "Играть!">
+                    </form>
+                    <br />
+                    <div class = "rules_block">
+                        <h1 class = "text_centered"> Правила игры: </h1>
+                        <div class "row">
+                            <div class = "left_half_column">
+                                <h3 class = "text_centered"> Управление: </h3>
+                                <ul>
+                                    <li> <em> <b> Стрелка влево </b> </em> - шаг влево </li>
+                                    <li> <em> <b> Стрелка вправо </b> </em> - шаг вправо </li>
+                                    <li> <em> <b> Стрелка вверх </b> </em> - прыжок вверх </li>
+                                    <li> <em> <b> Пробел </b> </em> - выстрел </li>
+                                </ul>
+                            </div>
+                            <div class = "right_half_column"> </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Блок с результатом игры -->
+                <div id = "game_over">
+                    <h1 id = "congratulations" class = "text_centered"> </h1>
+                    <h2 class = "text_centered">
+                        <b id = "current_result"> </b>
+                    </h2>
+                    <br />
+                    <div id = "new_game" class = "btn"> Новая игра </div>
+                </div>
+            </div>
+        </div>
+
+        <script src='src/gameManager.js'></script>
+        <script src='src/mapManager.js'></script>
+        <script src='src/spriteManager.js'></script>
+        <script src='src/physicManager.js'></script>
+        <script src='src/soundManager.js'></script>
+        <script src='src/eventManager.js'></script>
+        <script src='src/scoreTable.js'></script>
+        <script src='src/entities.js'></script>
+        <script src='index.js'></script>
+    </body>
+</html>
