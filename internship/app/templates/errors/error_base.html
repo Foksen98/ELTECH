@@ -1,0 +1,41 @@
+{% if current_user.is_authenticated and current_user.user._cls == "User.Admin" %}
+    {% extends 'admin/base.html' %}
+{% else %}
+    {% extends 'main/base.html' %}
+{% endif %}
+
+{% block title %} Ошибка | OSLL Stepic {% endblock %}
+
+{% block content %}
+
+<style media="screen">
+    .error {
+        text-align: center;
+        background-color: #f2f2f2;
+        border-radius: 5%;
+        border: 2px dotted #555;
+    }
+    h1.error-code {
+        letter-spacing: 0.5vw;
+        font-weight: 800;
+        font-size: 20vh;
+    }
+    p.error-message {
+        font-size: 3vh;
+    }
+
+</style>
+
+<div class="row">
+        <div class="col-lg-10 col-lg-offset-1 error">
+            <div class="col-lg-6">
+                <h1 class="error-code">{% block error_code %}{% endblock %}</h1>
+                <p class="error-message">{% block error_message %}{% endblock %}</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="/static/images/error-image.png" class="img-responsive" alt="">
+            </div>
+        </div>
+</div>
+
+{% endblock %}
