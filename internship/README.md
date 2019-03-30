@@ -1,19 +1,4 @@
-# dolgistop_mail_sender
-Проект для отправки почты dolgistop
-
-## Инструкция по внесению изменений в проект
-
-* Создать ветку, отнаследовав её от ветки **dev**
-* Делать коммиты в эту ветку
-* После завершения работы над фичей открыть **merge request** в ветку dev
-
-Путь кода от фичи до продакшн-версии:    
-**feature -> dev -> master**
-
-Таким образом, в **master** всегда содержится только стабильная
-версия, и пуши происходят только по окончанию спринта. В **dev** в течение
-спринта собирается staging-версия.
-
+# internship
 
 ## Инструкция по локальному запуску
 
@@ -25,17 +10,6 @@ virtualenv venv -p python3 && source venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
-* Добавить переменные окружения
-    ```
-    export APP_SETTINGS="config.DevConfig"
-    export MAIL_SERVER=""
-    export MAIL_PORT="587"
-    export MAIL_USE_TLS="True"
-    export MAIL_USE_SSL="True"
-    export MAIL_USERNAME=""
-    export MAIL_PASSWORD=""
-    export MAIL_RECIPIENT=""
-    ```
 * Запустить сервер
 ```
 python manage.py runserver

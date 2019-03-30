@@ -1,10 +1,4 @@
-{% if current_user.is_authenticated and current_user.user._cls == "User.Admin" %}
-    {% extends 'admin/base.html' %}
-{% else %}
-    {% extends 'main/base.html' %}
-{% endif %}
-
-{% block title %} Ошибка | OSLL Stepic {% endblock %}
+{% block title %} Ошибка | МО ЭВМ {% endblock %}
 
 {% block content %}
 

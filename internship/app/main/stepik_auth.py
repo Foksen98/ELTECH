@@ -1,6 +1,19 @@
+from .. import oauth
+import config_reader as cr
 from requests import ConnectionError as ConnectionErrorRe, Timeout, session
 from requests.auth import HTTPBasicAuth
-# import json
+
+
+# приложение oauth
+stepic_oauth = oauth.remote_app('Internship',
+    request_token_url = None,
+    access_token_url = 'https://stepik.org/oauth2/token/',
+    authorize_url = 'https://stepik.org/oauth2/authorize/',
+    consumer_key = cr.get_stepic_client_id(),
+    consumer_secret = cr.get_stepic_client_secret(),
+    request_token_params = {'scope': 'read write'},
+    access_token_method = 'POST',
+)
 
 
 class StepicAgent:

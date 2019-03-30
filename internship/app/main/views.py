@@ -1,12 +1,13 @@
 from . import main
 from flask import render_template, session, request, redirect, url_for, abort, current_app, flash
 from flask_login import login_user, logout_user, login_required, current_user
-from .stepik_auth import StepicAgent
+from .stepik_auth import StepicAgent, stepic_oauth
+from .models import Teacher, Student, Course
 
 # вход (через Stepik)
-@main.route('/login/', methods = ['POST'])
+@main.route('/login/', methods = ['GET'])
 def login():
-    return stepic.authorize(callback=url_for('.authorized', _external=True))
+    return stepic_oauth.authorize(callback=url_for('.authorized', _external=True))
 
 
 # выход
@@ -18,12 +19,13 @@ def logout():
 
 
 # авторизация
-@main.route('/authorized/', methods = ['GET'])
+@main.route('/authorized/', methods = ['GET', 'POST'])
 def authorized():
+    print(request.args)
     if request.args.get('code') is None:
         abort(404)
 
-    response = stepic.authorized_response()
+    response = stepic_oauth.authorized_response()
     try:
         token = response['access_token']
     except:

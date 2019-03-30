@@ -1,12 +1,13 @@
-import os
+import config_reader as cr
 
 
 class Config(object):
-    DEBUG = False
+    CSRF_ENABLED = True
+    SECRET_KEY = cr.get_server_secret_key()
     # настройки бд
-    MONGODB_DB = os.getenv('MONGODB_DB', 'internship')
-    MONGODB_HOST = os.getenv('MONGODB_HOST', '127.0.0.1')
-    MONGODB_PORT = os.getenv('MONGODB_PORT', '27017')
+    MONGODB_DB = cr.get_db_name()
+    MONGODB_HOST = cr.get_db_host()
+    MONGODB_PORT = cr.get_db_port()
 
 
 class DevConfig(Config):
