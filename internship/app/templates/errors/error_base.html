@@ -1,3 +1,5 @@
+{% extends "main/base.html" %}
+
 {% block title %} Ошибка | МО ЭВМ {% endblock %}
 
 {% block content %}
@@ -27,7 +29,7 @@
                 <p class="error-message">{% block error_message %}{% endblock %}</p>
             </div>
             <div class="col-lg-6">
-                <img src="/static/images/error-image.png" class="img-responsive" alt="">
+                <img src="{{url_for('static', filename = 'images/error-image.png')}}" class='img-responsive' alt=''>
             </div>
         </div>
 </div>

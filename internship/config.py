@@ -1,7 +1,13 @@
+import os
 import config_reader as cr
 
 
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+APP_NAME = "app"
+
+
 class Config(object):
+    UPLOAD_FOLDER = os.path.join(BASEDIR, APP_NAME, 'static/')
     CSRF_ENABLED = True
     SECRET_KEY = cr.get_server_secret_key()
     # настройки бд

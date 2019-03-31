@@ -1,4 +1,5 @@
 # internship
+Автоматизация работы преподавателя в курсах по программированию и информатике
 
 ## Инструкция по локальному запуску
 
@@ -9,6 +10,10 @@ virtualenv venv -p python3 && source venv/bin/activate
 * Установить зависимости
 ```
 pip install -r requirements.txt
+```
+* Добавить нового учителя (пользователя) в базу
+```
+python manage.py runserver -stepic_id 12345678
 ```
 * Запустить сервер
 ```
